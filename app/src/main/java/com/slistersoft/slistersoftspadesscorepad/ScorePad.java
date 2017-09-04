@@ -43,7 +43,9 @@ public class ScorePad extends AppCompatActivity {
             INTENT_KEY_BLIND_MIN_BID = "BLIND_MIN_BID",
             INTENT_KEY_BLIND_BID_DEFICIT_REQUIRED = "BLIND_BID_DEFICIT_REQUIRED",
             INTENT_KEY_T1_SCORE = "t1Score",
+            INTENT_KEY_T1_OLD_SCORE = "T1OLDSCORE",
             INTENT_KEY_T2_SCORE = "t2Score",
+            INTENT_KEY_T2_OLD_SCORE = "T2OLDSCORE",
             INTENT_KEY_T1_BID = "T1BID",
             INTENT_KEY_T1_BLIND = "T1BLIND",
             INTENT_KEY_T1_NIL = "T1NIL",
@@ -525,8 +527,13 @@ public class ScorePad extends AppCompatActivity {
             //Save UI state changes to the savedInstanceState
             //Which is then passed to onCreate after it is killed and restarted
 
-            savedInstanceState.putInt("t1Score", t1Score);
-            savedInstanceState.putInt("t2Score", t2Score);
+            savedInstanceState.putInt(INTENT_KEY_T1_SCORE, t1Score);
+            savedInstanceState.putInt(INTENT_KEY_T1_OLD_SCORE, t1OldScore);
+            savedInstanceState.putInt(INTENT_KEY_T1_BID, t1Bid);
+
+            savedInstanceState.putInt(INTENT_KEY_T2_SCORE, t2Score);
+            savedInstanceState.putInt(INTENT_KEY_T2_OLD_SCORE, t2OldScore);
+            savedInstanceState.putInt(INTENT_KEY_T2_BID, t2Bid);
 
         }
         catch(Exception e){}
@@ -541,10 +548,16 @@ public class ScorePad extends AppCompatActivity {
         try{
             super.onRestoreInstanceState(savedInstanceState);
 
-            t1Score = savedInstanceState.getInt("t1Score");
-            t2Score = savedInstanceState.getInt("t2Score");
+            t1Score = savedInstanceState.getInt(INTENT_KEY_T1_OLD_SCORE);
+            t2Score = savedInstanceState.getInt(INTENT_KEY_T2_OLD_SCORE);
 
-            updateScores(t1Score, t2Score);
+            updateScores(savedInstanceState.getInt(INTENT_KEY_T1_SCORE), savedInstanceState.getInt(INTENT_KEY_T2_SCORE));
+
+            t1Bid = savedInstanceState.getInt(INTENT_KEY_T1_BID);
+            t2Bid = savedInstanceState.getInt(INTENT_KEY_T2_BID);
+
+            updateBidDisplays();
+
         }
         catch(Exception e){}
 
