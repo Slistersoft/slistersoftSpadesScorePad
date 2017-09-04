@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            // TODO Auto-generated method stub
+
                             hateApp = true;
                         }
                     })

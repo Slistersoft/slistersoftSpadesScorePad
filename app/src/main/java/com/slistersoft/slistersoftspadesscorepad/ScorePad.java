@@ -326,8 +326,6 @@ public class ScorePad extends AppCompatActivity {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            // TODO Auto-generated method stub
-
 
                             String losePrefix = getResources().getString(R.string.teamLosePrefix) + "\n\n";
                             String winPrefix = getResources().getString(R.string.teamWonPrefix) + "\n\n";
@@ -791,7 +789,6 @@ public class ScorePad extends AppCompatActivity {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    // TODO Auto-generated method stub
 
                     try{
                         updateScores(Integer.parseInt(t1Box.getText().toString()),Integer.parseInt(t2Box.getText().toString()));
@@ -805,7 +802,6 @@ public class ScorePad extends AppCompatActivity {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    // TODO Auto-generated method stub
 
                 }
             });
