@@ -11,5 +11,8 @@
     <string name="pointsToWinPlaceholder">Point(s) needed to win: 300 (3 books and 00 bags)</string>
     <string name="FirstHandBidNotAllowedMsg">This is the first hand so you don\'t need to place a bid. If you would like to bid on the first hand you can change this in the settings. Just tap the wrench icon in the top bar or the 3 dots in the upper right corner.</string>
     <string name="launchBidEnterScreenCatchMsg">Error launching bid entering screen.</string>
+    <string name="UnsavedGameWarning">Are you sure you want to exit this game? This will reset the current score.</string>
+    <string name="exitGameButtonText">Yes</string>
+    <string name="exitGameNegativeButtonText">No</string>
 
 </resources>

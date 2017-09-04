@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -263,6 +264,21 @@ public class EnterBids extends AppCompatActivity {
 
             default: return 0;
 
+        }
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case android.R.id.home:
+                cancelBids(null);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
     }
