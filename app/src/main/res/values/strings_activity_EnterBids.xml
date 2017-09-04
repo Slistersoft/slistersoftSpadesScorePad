@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="button_accept_bids">Accept Bids</string>
+    <string name="BidSpinnerLabel">Bid:</string>
+    <string name="blindSwitchlabel">Blind Bid?</string>
+    <string name="nilSwitchLabel">Nil Bid?</string>
+    <string name="enterBidSpinnerPrompt">Tap Number To Enter Bid</string>
+
+
+</resources>

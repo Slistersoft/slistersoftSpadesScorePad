@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="enterBooksBidSpinnerLabel">Enter Books:</string>
+    <string name="enterBooksSpinnerPrompt">Tap A Number To Enter Books</string>
+    <string name="button_AcceptBooksText">Accept Books</string>
+    <string name="illegalBookEnteredAmountMsg">Both team\'s books must add up to 13. Make sure you entered the correct number of books for each team.</string>
+    <string name="acceptBidsCatchMsg">Error passing books back to score pad. Message:</string>
+
+</resources>

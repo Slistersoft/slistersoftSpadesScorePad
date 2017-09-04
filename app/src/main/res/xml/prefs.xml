@@ -1,0 +1,119 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+
+    <PreferenceCategory android:title="@string/prefSectionTitle_gameRules">
+
+        <EditTextPreference
+            android:key="@string/pref_key_winning_score"
+            android:title="@string/pref_title_winning_score"
+            android:defaultValue="@string/pref_default_winning_score"
+            android:selectAllOnFocus="true"
+            android:inputType="number"
+            android:singleLine="true"
+            android:maxLines="1" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/prefSectionTitle_BiddingRules">
+
+    <SwitchPreference
+            android:key="@string/pref_key_noOverOption"
+            android:title="@string/pref_title_noOverOption"
+            android:summary="@string/pref_summary_noOverOption"
+            android:defaultValue="@bool/pref_default_noOverOption" />
+
+    <ListPreference
+        android:key="@string/pref_key_sandbagLimit"
+        android:title="@string/pref_title_sandbagLimit"
+        android:summary="@string/pref_summary_sandbagLimit"
+        android:entries="@array/pref_bid_options"
+        android:entryValues="@array/pref_bid_options"
+        android:defaultValue="@string/pref_default_sandbagLimit" />
+
+    <ListPreference
+        android:key="@string/pref_key_sandbagPenalty"
+        android:title="@string/pref_title_sandbagPenalty"
+        android:summary="@string/pref_summary_sandbagPenalty"
+        android:entries="@array/pref_bid_options"
+        android:entryValues="@array/pref_bid_options"
+        android:defaultValue="@string/pref_default_sandbagPenalty" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/prefSectionTitle_RegularBiddingRules">
+
+        <SwitchPreference
+            android:key="@string/pref_key_firstHandBid"
+            android:title="@string/pref_title_firstHandBid"
+            android:summary="@string/pref_summary_firstHandBid"
+            android:defaultValue="@bool/pref_default_firstHandBid" />
+
+        <ListPreference
+            android:key="@string/pref_key_minimumRegularBid"
+            android:title="@string/pref_title_minimumRegularBid"
+            android:defaultValue="@string/pref_default_minimumRegularBid"
+            android:entries="@array/pref_bid_options"
+            android:entryValues="@array/pref_bid_options"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:summary="Lowest amount allowed to bid."/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/prefsectionTitle_BlindBidding">
+
+        <ListPreference
+            android:key="@string/pref_key_minimumBlindBid"
+            android:title="@string/pref_title_minimumBlindBid"
+            android:defaultValue="@string/pref_default_minimumBlindBid"
+            android:entries="@array/pref_bid_options"
+            android:entryValues="@array/pref_bid_options"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null" />
+
+        <EditTextPreference
+            android:key="@string/pref_key_blind_deficit"
+            android:title="@string/pref_title_blind_deficit_required"
+            android:summary="@string/pref_description_blind_deficit_required"
+            android:defaultValue="@string/pref_default_blind_deficit_required"
+            android:selectAllOnFocus="true"
+            android:inputType="number"
+            android:singleLine="true"
+            android:maxLines="1" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/prefSectionTitle_Misc">
+
+        <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+             dismiss it. -->
+        <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+
+        <EditTextPreference
+            android:key="@string/pref_key_team1DefaultName"
+            android:title="@string/pref_title_team1DefaultName"
+            android:defaultValue="@string/pref_default_team1DefaultName"
+            android:selectAllOnFocus="true"
+            android:capitalize="words"
+            android:inputType="textPersonName" />
+
+        <EditTextPreference
+            android:key="@string/pref_key_team2DefaultName"
+            android:title="@string/pref_title_team2DefaultName"
+            android:defaultValue="@string/pref_default_team2DefaultName"
+            android:selectAllOnFocus="true"
+            android:capitalize="words"
+            android:inputType="textPersonName" />
+
+        <SwitchPreference
+            android:key="@string/pref_key_vibration"
+            android:title="@string/pref_title_vibration"
+            android:summary="@string/pref_summary_vibration"
+            android:defaultValue="@bool/pref_default_vibration" />
+
+    </PreferenceCategory>
+
+    </PreferenceScreen>
+

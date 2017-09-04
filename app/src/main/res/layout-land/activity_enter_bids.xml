@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.slistersoft.slistersoftspadesscorepad.EnterBids"
+    tools:layout_editor_absoluteY="73dp"
+    tools:layout_editor_absoluteX="0dp">
+
+
+    <Button
+        android:id="@+id/btnAcceptBids"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorPrimary"
+        android:onClick="acceptBids"
+        android:text="@string/button_accept_bids"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:background="@color/colorPrimary"
+        android:onClick="cancelBids"
+        android:text="@string/button_cancel"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintRight_toLeftOf="@+id/btnAcceptBids"
+        android:layout_marginRight="4dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="175dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:weightSum="1">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/t1BidsCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_weight="0.52"
+            app:cardElevation="@dimen/cardElevation">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/landCardPadding">
+
+                <TextView
+                    android:id="@+id/tvT1Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:elevation="0dp"
+                    android:text="@string/team_1_name_placeholder"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/landTeamNameSize" />
+
+                <TextView
+                    android:id="@+id/tvT1Score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/score_placeholder"
+                    android:textAlignment="center"
+                    android:textSize="24sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/cbT1Blind"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="setBlind"
+                        android:text="@string/blindSwitchlabel"
+                        android:textAlignment="center" />
+
+                    <CheckBox
+                        android:id="@+id/cbT1Nil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="setNil"
+                        android:text="@string/nilSwitchLabel"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="8dp"
+                        android:text="@string/BidSpinnerLabel"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <Spinner
+                        android:id="@+id/t1BidPicker"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:prompt="@string/enterBidSpinnerPrompt"
+                        android:spinnerMode="dialog"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/t2BidsCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/cardElevation">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/landCardPadding">
+
+                <TextView
+                    android:id="@+id/tvT2Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/team_2_name_placeholder"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/landTeamNameSize" />
+
+                <TextView
+                    android:id="@+id/tvT2Score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/score_placeholder"
+                    android:textAlignment="center"
+                    android:textSize="24sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/cbT2Blind"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="setBlind"
+                        android:text="@string/blindSwitchlabel"
+                        android:textAlignment="center" />
+
+                    <CheckBox
+                        android:id="@+id/cbT2Nil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="setNil"
+                        android:text="@string/nilSwitchLabel"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="8dp"
+                        android:text="@string/BidSpinnerLabel"
+                        android:textSize="24sp" />
+
+                    <Spinner
+                        android:id="@+id/t2BidPicker"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:prompt="@string/enterBidSpinnerPrompt"
+                        android:spinnerMode="dialog" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

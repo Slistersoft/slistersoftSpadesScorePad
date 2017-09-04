@@ -1,0 +1,69 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <EditText
+                android:id="@+id/editTxtTeam1Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="@string/team1DefaultHint"
+                android:inputType="textPersonName"
+                android:text="@string/team1DefaultLabel" >
+
+                <requestFocus />
+            </EditText>
+
+            <EditText
+                android:id="@+id/editTxtTeam2Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="@string/team2DefaultHint"
+                android:inputType="textPersonName"
+                android:text="@string/team2DefaultLabel" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                android:onClick="startGame"
+                android:text="@string/startGameBtnText"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="8dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="openPlayStorePage"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="8dp"
+                android:text="@string/rateBtnText" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/feedBackBtnText"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
+                android:onClick="sendFeedback" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

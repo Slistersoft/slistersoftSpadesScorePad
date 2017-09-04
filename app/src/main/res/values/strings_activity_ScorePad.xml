@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="whatTeamAreYouPrompt">What team are you on?</string>
+    <string name="teamWonPrefix">I kicked some butt in Spades. </string>
+    <string name="teamLosePrefix">I got my butt kicked in Spades. </string>
+    <string name="teamTiePrefix">The game\'s all tied up. </string>
+    <string name="successfullNilPoints">100</string>
+    <string name="successfullBlindNilPoints">200</string>
+    <string name="pointsNeededToWinEndString">Point(s) to win</string>
+    <string name="pointsToWinPlaceholder">Point(s) needed to win: 300 (3 books and 00 bags)</string>
+    <string name="FirstHandBidNotAllowedMsg">This is the first hand so you don\'t need to place a bid. If you would like to bid on the first hand you can change this in the settings. Just tap the wrench icon in the top bar or the 3 dots in the upper right corner.</string>
+    <string name="launchBidEnterScreenCatchMsg">Error launching bid entering screen.</string>
+
+</resources>

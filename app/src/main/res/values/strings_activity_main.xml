@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="playStoreURL">https://play.google.com/store/apps/details?id=com.slistersoft.slistersoftspadesscorepad</string>
+    <string name="shortPlayStoreURL">http://goo.gl/tEYyTt</string>
+    <string name="prePlayStoreRatingMessage">You may be asked what to use to complete this action. I recommend selecting the play store. Once you have done that please tap on the amount of stars you would like to rate my app. Then if you wouldn\'t mind writing a little something about it too. I would really appreciate it. Thank you.</string>
+    <string name="team1DefaultLabel">Us</string>
+    <string name="team2DefaultLabel">Them</string>
+    <string name="contactEmailAddress">scott.g.lister@gmail.com</string>
+    <string name="emailDefaultSubject">Spades Score Pad Suggestion</string>
+    <string name="emailPickerDialogText">Pick an app, any app ;)</string>
+    <string name="feedBackBtnText">Send Me Direct Feedback</string>
+    <string name="rateBtnText">Rate This App</string>
+    <string name="startGameBtnText">Start Game</string>
+    <string name="team1DefaultHint">Team 1 Name</string>
+    <string name="team2DefaultHint">Team 2 Name</string>
+    <string name="defaultDialogCancelBtnTxt">Nevermind</string>
+    <string name="team1NameMissingMsg">Please enter a name for Team 1</string>
+    <string name="team2NameMissingMsg">Please enter a name for Team 2</string>
+    <string name="rateAppCancelBtnText">Never mind. I just remembered I hate this app.</string>
+    <string name="rateAppOkBtnText">Sure, No Problem</string>
+    <string name="playStoreLoadErrorMsg">Could not load the play store for some reason. Please try again later.</string>
+    <string name="hateAppMsg">Well if you hate it so much. You should still give me some feedback to help me improve the app. At the very least this will take you to the place to uninstall the app.</string>
+    <string name="sendEmailIntentType">message/rfc822</string>
+
+</resources>

@@ -1,0 +1,93 @@
+<resources>
+    <string name="title_activity_preferences">My Preferences</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Category Titles -->
+    <string name="prefSectionTitle_gameRules">Game Rules</string>
+    <string name="prefSectionTitle_BiddingRules">Bidding Rules</string>
+    <string name="prefSectionTitle_RegularBiddingRules">Regular Bidding</string>
+    <string name="prefsectionTitle_BlindBidding">Blind Bidding</string>
+    <string name="prefSectionTitle_TeamNames">Team Names</string>
+    <string name="prefSectionTitle_Misc">Misc</string>
+
+    <string name="pref_key_winning_score">winning_score</string>
+    <string name="pref_key_blind_deficit">blind_deficit</string>
+
+    <string name="pref_key_firstHandBid">blnFirstHandBid</string>
+    <string name="pref_title_firstHandBid">Allow Bidding on 1st Hand</string>
+    <string name="pref_summary_firstHandBid">Determines whether or not you are allowed to bid on the first hand.</string>
+    <bool name="pref_default_firstHandBid">false</bool>
+
+    <string name="pref_key_sandbagLimit">sandBagLimit</string>
+    <string name="pref_title_sandbagLimit">Sandbag Limit</string>
+    <string name="pref_summary_sandbagLimit">Max amount of sandbag(s) allowed.</string>
+    <string name="pref_default_sandbagLimit">13</string>
+
+    <string name="pref_key_sandbagPenalty">sandBagPenalty</string>
+    <string name="pref_title_sandbagPenalty">Sandbag Penalty</string>
+    <string name="pref_summary_sandbagPenalty">The amount of book(s) lost if you exceed sandbag limit.</string>
+    <string name="pref_default_sandbagPenalty">0</string>
+
+    <string name="pref_title_winning_score">Winning Score</string>
+    <string name="pref_default_winning_score">350</string>
+
+    <string name="pref_title_blind_deficit_required">Deficit Required To Blind Bid</string>
+    <string name="pref_description_blind_deficit_required">The amount of points a team needs to be losing by in order to be allowed to blind bid.</string>
+    <string name="pref_default_blind_deficit_required">100</string>
+
+    <string name="pref_key_kevin_audio">kevin_audio_list</string>
+    <string name="pref_default_kevin_audio">0</string>
+
+    <string name="pref_key_team1DefaultName">pref_key_t1Name</string>
+    <string name="pref_title_team1DefaultName">Team 1 Default Name</string>
+    <string name="pref_default_team1DefaultName">Us</string>
+
+    <string name="pref_key_team2DefaultName">pref_key_t2Name</string>
+    <string name="pref_title_team2DefaultName">Team 2 Default Name</string>
+    <string name="pref_default_team2DefaultName">Them</string>
+
+    <string name="pref_key_minimumRegularBid">minRegularBid</string>
+    <string name="pref_title_minimumRegularBid">Board Bid</string>
+    <string name="pref_default_minimumRegularBid">4</string>
+
+    <string name="pref_key_minimumBlindBid">minBlindBid</string>
+    <string name="pref_title_minimumBlindBid">Minimum Blind Bid</string>
+    <string name="pref_default_minimumBlindBid">7</string>
+
+    <string name="pref_key_blindBidStyle">blindBidStyle</string>
+    <string name="pref_default_blindBidStyle">1</string>
+
+    <string name="pref_key_blindBidPointBonus">blindBidPointValue</string>
+    <string name="pref_default_blindBidPointBonus">200</string>
+
+    <string name="pref_key_noOverOption">noOverOption</string>
+    <string name="pref_title_noOverOption">No Overs Mode</string>
+    <string name="pref_summary_noOverOption">This mode will bypass sandbag limits and penalties. It will not award any extra points if you go over your bid.</string>
+    <bool name="pref_default_noOverOption">false</bool>
+
+    <string name="pref_key_vibration">vibration</string>
+    <string name="pref_title_vibration">Vibration for Error Messages</string>
+    <string name="pref_summary_vibration">Determines if your device will vibrate when you get an error message.</string>
+    <bool name="pref_default_vibration">true</bool>
+
+    
+    <string-array name="pref_bid_options">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+    </string-array>
+
+
+</resources>

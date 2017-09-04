@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="fabAnimationDuration">250</integer>
+    <integer name="cardSlideInDuration">700</integer>
+    <integer name="cardSlideInDelay">200</integer>
+
+</resources>

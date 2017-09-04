@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Activity Titles -->
+    <string name="app_name">Spades Score Pad</string>
+    <string name="title_activity_score_pad">Score Pad</string>
+    <string name="title_activity_EnterBids">Enter Bids</string>
+    <string name="title_activity_EnterBooks">Enter Books</string>
+
+    <!-- Menu Items -->
+    <string name="action_settings">My Rules</string>
+    <string name="shareBtnTxt">Share Your Score</string>
+
+    <!-- FAB Menu Items -->
+    <string name="fab_place_bids">Place Bids</string>
+    <string name="fab_enter_books">Enter Books</string>
+    <string name="fab_undo_last_hand">Undo Last Hand</string>
+    <string name="fab_manually_edit_scores">Manually Edit Scores</string>
+
+    <!-- Universally Used -->
+    <string name="button_cancel">Cancel</string>
+    <string name="team_1_name_placeholder">Team 1 Name</string>
+    <string name="team_2_name_placeholder">Team 2 Name</string>
+    <string name="score_placeholder">Score: 350</string>
+    <string name="bid_placeholder">Bid: 0</string>
+
+
+</resources>

@@ -1,0 +1,11 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="landFabItemBottomMargin">5dp</dimen>
+    <dimen name="landTVColumnRightMargin">10dp</dimen>
+    <dimen name="landTeamNameSize">27sp</dimen>
+    <dimen name="landBidDisplaySize">18sp</dimen>
+    <dimen name="landFabItemRightMargin">8dp</dimen>
+    <dimen name="cardElevation">10dp</dimen>
+    <dimen name="landCardPadding">10dp</dimen>
+
+</resources>
