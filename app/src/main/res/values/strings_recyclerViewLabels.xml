@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="staticGameCardLabel">Game:</string>
+    <string name="staticVersusLabel">VS</string>
+    <string name="t1NamePlaceholder">Team 1 Name</string>
+    <string name="t2NamePlaceholder">Team 2 Name</string>
+    <string name="scoreLabel">Score:</string>
+    <string name="scoreSeperator">-</string>
+    <string name="scorePlaceholder">###</string>
+    <string name="startedDateLabel">Started:</string>
+</resources>

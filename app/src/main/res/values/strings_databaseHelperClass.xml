@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="addGameToDBSuccessMessage">New game saved</string>
+    <string name="addGameToDBFailMsg">Error saving game</string>
+    <string name="onCreateErrorMsg">Error creating game database</string>
+    <string name="onUpgradeErrorMsg">Error upgrading game database</string>
+    <string name="updateGameDBErrorMsg">Error updating game database</string>
+
+</resources>

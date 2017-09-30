@@ -3,6 +3,7 @@ package com.slistersoft.slistersoftspadesscorepad;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import java.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -11,9 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import java.util.Calendar;
 
 @SuppressWarnings("UnusedParameters")
 public class MainActivity extends AppCompatActivity {
+
+    GameSaveDatabase dbHandler;
 
     ActionBar actionBar = null;
 
@@ -36,6 +40,39 @@ public class MainActivity extends AppCompatActivity {
 
         // Return true to display menu
         return true;
+
+    }
+
+    public void testDBInsert(View v){
+
+        Game ng = dbHandler.addGameToDB(new Game("poopy pants", "team2"));
+
+        custFuncs.MsgBox("Game ID: " + ng.getId() + " t1name: " + ng.getTeam1Name());
+
+
+    }
+
+    public void testDBRead(View v){
+
+        Game g = dbHandler.getGameFromDB(1);
+
+        g.setGameComplete(true);
+        g.setTeam1Score(350);
+        g.setTeam2Score(250);
+        g.setTeam1Name("fancy pants");
+        g.setTeam2Name("other pants");
+        g.setDateStarted(System.currentTimeMillis());
+
+        dbHandler.updateGameInDB(g);
+
+    }
+
+    public void testDateConversion(View v){
+
+        Game g = dbHandler.getGameFromDB(13);
+
+
+        custFuncs.MsgBox(dbHandler.getHumanFriendlyDateStringFromEPOCH(g.getDateStarted()));
 
     }
 
@@ -80,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
 
             t1NameBox.setText(t1Name);
             t2NameBox.setText(t2Name);
+
+            //Initialize Database
+            dbHandler = new GameSaveDatabase(this);
 
         }
         catch(Exception e){

@@ -7,5 +7,7 @@
     <dimen name="landFabItemRightMargin">8dp</dimen>
     <dimen name="cardElevation">10dp</dimen>
     <dimen name="landCardPadding">10dp</dimen>
+    <dimen name="rv_cardHeader1FontSize">24sp</dimen>
+    <dimen name="rv_cardHeader2FontSize">18sp</dimen>
 
 </resources>
