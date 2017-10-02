@@ -6,6 +6,7 @@
     <string name="title_activity_score_pad">Score Pad</string>
     <string name="title_activity_EnterBids">Enter Bids</string>
     <string name="title_activity_EnterBooks">Enter Books</string>
+    <string name="title_activity_LoadGamePicker">Select Game To Load</string>
 
     <!-- Menu Items -->
     <string name="action_settings">My Rules</string>

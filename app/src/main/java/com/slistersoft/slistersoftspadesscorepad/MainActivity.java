@@ -43,36 +43,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void testDBInsert(View v){
+    public void launchGamePicker(View v){
 
-        Game ng = dbHandler.addGameToDB(new Game("poopy pants", "team2"));
-
-        custFuncs.MsgBox("Game ID: " + ng.getId() + " t1name: " + ng.getTeam1Name());
-
-
-    }
-
-    public void testDBRead(View v){
-
-        Game g = dbHandler.getGameFromDB(1);
-
-        g.setGameComplete(true);
-        g.setTeam1Score(350);
-        g.setTeam2Score(250);
-        g.setTeam1Name("fancy pants");
-        g.setTeam2Name("other pants");
-        g.setDateStarted(System.currentTimeMillis());
-
-        dbHandler.updateGameInDB(g);
-
-    }
-
-    public void testDateConversion(View v){
-
-        Game g = dbHandler.getGameFromDB(13);
-
-
-        custFuncs.MsgBox(dbHandler.getHumanFriendlyDateStringFromEPOCH(g.getDateStarted()));
+        try {
+            Intent intent = new Intent(this, GamePickerActivity.class);
+            startActivity(intent);
+        } catch (Exception e) {
+            custFuncs.MsgBox(getString(R.string.launchGamePickerError), true);
+            e.printStackTrace();
+        }
 
     }
 

@@ -1,8 +1,11 @@
 package com.slistersoft.slistersoftspadesscorepad;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+
+import java.util.ArrayList;
 
 /**
  * Created by slist on 9/24/2017.
@@ -10,12 +13,21 @@ import android.util.Log;
 
 public class Game implements DatabaseConstants {
 
+    //region Fields
+    private Context callingContext;
     private long id, dateStarted;
     private String team1Name, team2Name;
     private boolean isGameComplete;
     private int team1Score, team2Score;
+    private CUSTOM_FUNCTIONS custFuncs;
+    private GameSaveDatabase gameDB;
+    //endregion
 
-    public Game(long id, long dateStarted, String team1Name, String team2Name, boolean isGameComplete, int team1Score, int team2Score) {
+    //region Constructors
+    public Game(Context callingContext, long id, long dateStarted, String team1Name, String team2Name, boolean isGameComplete, int team1Score, int team2Score) {
+        this.callingContext = callingContext;
+        custFuncs = new CUSTOM_FUNCTIONS(callingContext);
+        gameDB = new GameSaveDatabase(callingContext);
         this.id = id;
         this.dateStarted = dateStarted;
         this.team1Name = team1Name;
@@ -25,14 +37,161 @@ public class Game implements DatabaseConstants {
         this.team2Score = team2Score;
     }
 
-    public Game(String team1Name, String team2Name) {
+    public Game(Context callingContext, String team1Name, String team2Name) {
 
-        this(-1, System.currentTimeMillis(), team1Name,team2Name,false,0,0);
+        this(callingContext, -1, System.currentTimeMillis(), team1Name,team2Name,false,0,0);
     }
 
-    public Game(){
+    public Game(Context callingContext){
 
-        this("","");
+        this(callingContext, "","");
+
+    }
+
+    //endregion
+
+    //region Database Functions
+
+    public void insertNewGameToDB(){
+
+        try {
+            ContentValues values = getContentValues();
+
+            setId(gameDB.insertRecordToDB(TABLE_GAMES, values));
+
+            custFuncs.showToast(callingContext.getString(R.string.addGameToDBSuccessMessage), 5000);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            custFuncs.showToast(callingContext.getString(R.string.addGameToDBFailMsg), 5000);
+        }
+    }
+
+    public void updateGameInDB(){
+
+        try {
+
+            custFuncs.showToast("Updated " + gameDB.updateRecordsInDB(TABLE_GAMES, getContentValues(), GAMES_COLUMN_ID + " = " + getId()) + " rows");
+        } catch (Exception e) {
+            custFuncs.showToast(callingContext.getString(R.string.updateGameDBErrorMsg));
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Loads data from Game table and populates game object with all data from that row.
+     * @param gameID Game ID to get
+     * @return
+     */
+    private Game getGameFromDB(long gameID){
+
+        Game gameToReturn = null;
+
+        try {
+
+            String query = "SELECT * FROM " + TABLE_GAMES + " WHERE ID = " + gameID;
+
+            Cursor cursor = gameDB.getCursorFromSelectQuery(query);
+
+            if(cursor.moveToFirst()){
+                gameToReturn = getGameFromCursor(cursor);
+            }
+            else{
+                custFuncs.showToast("Game ID: " + gameID + " not found in Database", 5000);
+            }
+
+            cursor.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Game(callingContext);
+        }
+
+        return gameToReturn;
+
+    }
+
+    /**
+     *
+     * @param gameCursor Cursor object containing a row of data from the Game table
+     * @return Returns a Game object populated with data from the cursor.
+     */
+    private Game getGameFromCursor(Cursor gameCursor){
+
+        return getGameFromCursor(gameCursor, 0);
+
+    }
+
+    /**
+     * Builds game object from data in cursor.
+     * @param gameCursor Cursor containing ALL rows in the Games table.
+     * @param curserPositionToGet Index in cursor you want to grab from. Use this if the cursor contains multiple rows.
+     * @return Game object from specified cursor index.
+     */
+    private Game getGameFromCursor(Cursor gameCursor, int curserPositionToGet){
+
+        Game game;
+
+        try {
+
+            String t1Name, t2Name;
+            int t1Score, t2Score;
+            long id, dateStarted;
+            boolean gameComplete;
+
+            if (curserPositionToGet <= 0)
+                gameCursor.moveToFirst();
+            else
+                gameCursor.moveToPosition(curserPositionToGet);
+
+            if(gameCursor.getInt(gameCursor.getColumnIndex(GAMES_COLUMN_ISGAMECOMPLETE)) == 1)
+                gameComplete = true;
+            else
+                gameComplete = false;
+
+            id = gameCursor.getLong(gameCursor.getColumnIndex(GAMES_COLUMN_ID));
+            dateStarted = gameCursor.getLong(gameCursor.getColumnIndex(GAMES_COLUMN_DATESTARTED));
+            t1Name = gameCursor.getString(gameCursor.getColumnIndex(GAMES_COLUMN_T1NAME));
+            t2Name = gameCursor.getString(gameCursor.getColumnIndex(GAMES_COLUMN_T2NAME));
+            t1Score = gameCursor.getInt(gameCursor.getColumnIndex(GAMES_COLUMN_T1SCORE));
+            t2Score = gameCursor.getInt(gameCursor.getColumnIndex(GAMES_COLUMN_T2SCORE));
+
+            game = new Game(callingContext, id, dateStarted, t1Name, t2Name, gameComplete, t1Score, t2Score);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Game(callingContext, "Error", "Error");
+        }
+
+        return game;
+
+    }
+
+    //endregion
+
+    //region Getters and Setters
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public static String getCreateTableQuery(){
+
+        String createGamesTableStatement = "CREATE TABLE " + TABLE_GAMES + "("
+                + GAMES_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + GAMES_COLUMN_T1NAME + " TEXT, "
+                + GAMES_COLUMN_T2NAME + " TEXT, "
+                + GAMES_COLUMN_T1SCORE + " NUMERIC, "
+                + GAMES_COLUMN_T2SCORE + " NUMERIC, "
+                + GAMES_COLUMN_ISGAMECOMPLETE + " NUMERIC, "
+                + GAMES_COLUMN_DATESTARTED + " INTEGER"
+                + ")";
+
+        return createGamesTableStatement;
 
     }
 
@@ -41,7 +200,7 @@ public class Game implements DatabaseConstants {
      *
      * @return ContentValues object populated with fields from this Game object
      */
-    public ContentValues getContentValues(){
+    protected ContentValues getContentValues(){
 
         ContentValues cv = new ContentValues();
 
@@ -62,16 +221,44 @@ public class Game implements DatabaseConstants {
 
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
+    /**
+     *
+     * @return Gets date started long numeric value from DB
+     */
     public long getDateStarted() {
         return dateStarted;
+    }
+
+    /**
+     * Converts dateStarted into a human friendly date string
+     * @return Human friendly date and time string
+     */
+    public String getHumanDateStartedString(){
+
+        return GameSaveDatabase.getHumanFriendlyDateStringFromEPOCH(getDateStarted());
+
+    }
+
+    public ArrayList<Game> getInCompleteGames(){
+
+        ArrayList<Game> games = new ArrayList<>();
+
+        Cursor gamesCursor = gameDB.getCursorFromSelectQuery("SELECT " + GAMES_COLUMN_ID + " WHERE " + GAMES_COLUMN_ISGAMECOMPLETE + " = 0");
+
+        try {
+            //Cursor starts before first result so first run of loop will start at first item
+            while(gamesCursor.moveToNext()){
+
+                Game game = getGameFromCursor(gamesCursor, gamesCursor.getPosition());
+                games.add(game);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return games;
+
     }
 
     public void setDateStarted(long dateStarted) {
@@ -130,4 +317,5 @@ public class Game implements DatabaseConstants {
         this.team2Score = team2Score;
     }
 
+    //endregion
 }

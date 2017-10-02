@@ -17,15 +17,4 @@ public interface DatabaseConstants {
     String GAMES_COLUMN_ISGAMECOMPLETE = "ISGAMECOMPLETE";
     String GAMES_COLUMN_T1SCORE = "T1SCORE";
     String GAMES_COLUMN_T2SCORE = "T2SCORE";
-
-    String createGamesTableStatement = "CREATE TABLE " + TABLE_GAMES + "("
-            + GAMES_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + GAMES_COLUMN_T1NAME + " TEXT, "
-            + GAMES_COLUMN_T2NAME + " TEXT, "
-            + GAMES_COLUMN_T1SCORE + " NUMERIC, "
-            + GAMES_COLUMN_T2SCORE + " NUMERIC, "
-            + GAMES_COLUMN_ISGAMECOMPLETE + " NUMERIC, "
-            + GAMES_COLUMN_DATESTARTED + " INTEGER"
-            + ")";
-
 }
