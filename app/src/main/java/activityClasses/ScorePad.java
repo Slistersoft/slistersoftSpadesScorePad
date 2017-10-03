@@ -1,4 +1,4 @@
-package com.slistersoft.slistersoftspadesscorepad;
+package activityClasses;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,6 +22,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
+import customClasses.CUSTOM_FUNCTIONS;
+import customClasses.Game;
+import com.slistersoft.slistersoftspadesscorepad.R;
 
 
 @SuppressWarnings("UnusedParameters")

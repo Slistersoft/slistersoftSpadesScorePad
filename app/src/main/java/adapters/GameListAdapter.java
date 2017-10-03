@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.slistersoft.slistersoftspadesscorepad.CUSTOM_FUNCTIONS;
-import com.slistersoft.slistersoftspadesscorepad.Game;
+import customClasses.CUSTOM_FUNCTIONS;
+import customClasses.Game;
 import com.slistersoft.slistersoftspadesscorepad.R;
 
 import java.util.ArrayList;

@@ -1,7 +1,9 @@
-package com.slistersoft.slistersoftspadesscorepad;
+package activityClasses;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+
+import com.slistersoft.slistersoftspadesscorepad.R;
 
 /**
  * Created by Scott Lister on 8/16/2014.

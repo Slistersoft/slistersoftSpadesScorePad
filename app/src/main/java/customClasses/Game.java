@@ -1,13 +1,15 @@
-package com.slistersoft.slistersoftspadesscorepad;
+package customClasses;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 
-import java.io.Serializable;
+import com.slistersoft.slistersoftspadesscorepad.R;
+
 import java.util.ArrayList;
 
+import activityClasses.ScorePad;
 import databaseStuff.DatabaseConstants;
 import databaseStuff.GameSaveDatabase;
 

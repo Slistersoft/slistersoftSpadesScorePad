@@ -7,8 +7,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.slistersoft.slistersoftspadesscorepad.CUSTOM_FUNCTIONS;
-import com.slistersoft.slistersoftspadesscorepad.Game;
+import customClasses.CUSTOM_FUNCTIONS;
+import customClasses.Game;
 import com.slistersoft.slistersoftspadesscorepad.R;
 
 import java.text.SimpleDateFormat;

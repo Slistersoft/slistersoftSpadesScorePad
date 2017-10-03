@@ -1,9 +1,13 @@
-package com.slistersoft.slistersoftspadesscorepad;
+package activityClasses;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import customClasses.CUSTOM_FUNCTIONS;
+import customClasses.Game;
+import com.slistersoft.slistersoftspadesscorepad.R;
 
 import java.util.ArrayList;
 

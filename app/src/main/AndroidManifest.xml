@@ -13,9 +13,9 @@
         android:label="@string/app_name"
         android:theme="@style/Slistersoft3">
         <activity
-            android:name=".PreferencesActivity"
+            android:name="activityClasses.PreferencesActivity"
             android:label="@string/title_activity_preferences" />
-        <activity android:name=".MainActivity">
+        <activity android:name="activityClasses.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,23 +23,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ScorePad"
+            android:name="activityClasses.ScorePad"
             android:label="@string/title_activity_score_pad"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="activityClasses.MainActivity"
             android:theme="@style/Slistersoft3" />
         <activity
-            android:name=".EnterBids"
+            android:name="activityClasses.EnterBids"
             android:label="@string/title_activity_EnterBids"
-            android:parentActivityName=".ScorePad" />
+            android:parentActivityName="activityClasses.ScorePad" />
         <activity
-            android:name=".EnterBooks"
+            android:name="activityClasses.EnterBooks"
             android:label="@string/title_activity_EnterBooks"
-            android:parentActivityName=".ScorePad" />
+            android:parentActivityName="activityClasses.ScorePad" />
 
         <activity
-            android:name=".GamePickerActivity"
+            android:name="activityClasses.GamePickerActivity"
             android:label="@string/title_activity_LoadGamePicker"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName="activityClasses.MainActivity"/>
 
     </application>
 

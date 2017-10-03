@@ -1,4 +1,4 @@
-package com.slistersoft.slistersoftspadesscorepad;
+package activityClasses;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,6 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
+import customClasses.CUSTOM_FUNCTIONS;
+import customClasses.Game;
+import com.slistersoft.slistersoftspadesscorepad.R;
 
 import databaseStuff.GameSaveDatabase;
 

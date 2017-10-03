@@ -1,4 +1,4 @@
-package com.slistersoft.slistersoftspadesscorepad;
+package activityClasses;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import customClasses.CUSTOM_FUNCTIONS;
+import com.slistersoft.slistersoftspadesscorepad.R;
 
 public class EnterBooks extends AppCompatActivity {
 

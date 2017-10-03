@@ -1,4 +1,4 @@
-package com.slistersoft.slistersoftspadesscorepad;
+package customClasses;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,6 +12,8 @@ import android.support.v7.widget.CardView;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
+
+import com.slistersoft.slistersoftspadesscorepad.R;
 
 
 public class CUSTOM_FUNCTIONS extends Activity {

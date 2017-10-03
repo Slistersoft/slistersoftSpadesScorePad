@@ -1,4 +1,4 @@
-package com.slistersoft.slistersoftspadesscorepad;
+package activityClasses;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import customClasses.CUSTOM_FUNCTIONS;
+import com.slistersoft.slistersoftspadesscorepad.R;
 
 import java.util.ArrayList;
 import java.util.List;
