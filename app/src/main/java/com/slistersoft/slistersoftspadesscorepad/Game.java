@@ -2,7 +2,10 @@ package com.slistersoft.slistersoftspadesscorepad;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import databaseStuff.DatabaseConstants;
@@ -22,6 +25,7 @@ public class Game implements DatabaseConstants {
     private int team1Score, team2Score;
     private CUSTOM_FUNCTIONS custFuncs;
     private GameSaveDatabase gameDB;
+    public static String INTENT_KEY_GAMEID = "passedGameID";
     //endregion
 
     //region Constructors
@@ -68,7 +72,7 @@ public class Game implements DatabaseConstants {
         }
     }
 
-    public void updateGameInDB(){
+    public void saveChangesToDB(){
 
         try {
 
@@ -85,13 +89,13 @@ public class Game implements DatabaseConstants {
      * @param gameID Game ID to get
      * @return
      */
-    private Game getGameFromDB(long gameID){
+    public Game getGameFromDB(long gameID){
 
         Game gameToReturn = null;
 
         try {
 
-            String query = "SELECT * FROM " + TABLE_GAMES + " WHERE ID = " + gameID;
+            String query = "SELECT * FROM " + TABLE_GAMES + " WHERE " + GAMES_COLUMN_ID +" = " + gameID;
 
             Cursor cursor = gameDB.getCursorFromSelectQuery(query);
 
@@ -183,7 +187,7 @@ public class Game implements DatabaseConstants {
     public static String getCreateTableQuery(){
 
         String createGamesTableStatement = "CREATE TABLE " + TABLE_GAMES + "("
-                + GAMES_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + GAMES_COLUMN_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, "
                 + GAMES_COLUMN_T1NAME + " TEXT, "
                 + GAMES_COLUMN_T2NAME + " TEXT, "
                 + GAMES_COLUMN_T1SCORE + " NUMERIC, "
@@ -319,4 +323,18 @@ public class Game implements DatabaseConstants {
     }
 
     //endregion
+
+    public void launchGame(){
+
+        try {
+            Intent i = new Intent(callingContext, ScorePad.class);
+            i.putExtra(INTENT_KEY_GAMEID, getId());
+            callingContext.startActivity(i);
+        } catch (Exception e) {
+            custFuncs.MsgBox("Error launching game ID: " + getId());
+            e.printStackTrace();
+        }
+
+
+    }
 }

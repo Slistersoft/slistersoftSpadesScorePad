@@ -1,5 +1,6 @@
 package adapters;
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
     public class GameViewHolder extends RecyclerView.ViewHolder{
 
         public TextView tvT1Name, tvT2Name, tvT1Score, tvT2Score, tvDateStarted;
+        public CardView rvGameCard;
 
         public GameViewHolder(View itemView){
 
@@ -36,20 +38,26 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
 
             //region Initialize Game Card Controls
 
+            rvGameCard = (CardView)itemView.findViewById(R.id.rvGameCard);
             tvT1Name = (TextView)itemView.findViewById(R.id.rv_tvTeam1Name);
             tvT2Name = (TextView)itemView.findViewById(R.id.rv_tvTeam2Name);
             tvT1Score = (TextView)itemView.findViewById(R.id.rv_tvT1ScoreDisplay);
             tvT2Score = (TextView)itemView.findViewById(R.id.rv_tvT2ScoreDisplay);
             tvDateStarted = (TextView)itemView.findViewById(R.id.rv_tvDateStartedLabel);
 
-
             //endregion
 
+            rvGameCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    //Gets currently tapped game object and launch it
+                    mGames.get(getAdapterPosition()).launchGame();
+
+                }
+            });
+
         }
-
-
-
-
     }
 
     public GameListAdapter(Context callingContext, ArrayList<Game> gamesList) {

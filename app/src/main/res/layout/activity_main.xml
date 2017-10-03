@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="10dp"
-                android:onClick="startGame"
+                android:onClick="startNewGame"
                 android:text="@string/startGameBtnText"
                 android:background="@color/colorPrimary"
                 android:textColor="@android:color/white"

@@ -31,7 +31,7 @@ public class ScorePad extends AppCompatActivity {
 
     //Reference to the Custom Functions class that has commonly used methods like toast and msgbox
     CUSTOM_FUNCTIONS custFuncs = new CUSTOM_FUNCTIONS(this);
-    EnterBids eb = new EnterBids(this);
+    Game currentGame;
 
     MediaPlayer sound = null;
 
@@ -453,8 +453,12 @@ public class ScorePad extends AppCompatActivity {
 
             //Receive Team Names
             Intent intent = getIntent();
-            team1Name = intent.getStringExtra(MainActivity.TEAM_1);
-            team2Name = intent.getStringExtra(MainActivity.TEAM_2);
+
+            //Get game object
+            currentGame = new Game(this).getGameFromDB(intent.getLongExtra(Game.INTENT_KEY_GAMEID, -1));
+
+            team1Name = currentGame.getTeam1Name();// intent.getStringExtra(MainActivity.TEAM_1);
+            team2Name = currentGame.getTeam2Name(); //intent.getStringExtra(MainActivity.TEAM_2);
 
             //Setup Control References
 

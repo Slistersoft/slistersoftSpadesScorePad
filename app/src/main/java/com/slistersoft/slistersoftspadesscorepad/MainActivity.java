@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void startGame(View v){
+    public void startNewGame(View v){
 
         try{
 
@@ -145,11 +145,15 @@ public class MainActivity extends AppCompatActivity {
             }
             else{
 
-                Intent intent = new Intent(this, ScorePad.class);
+                /*Intent intent = new Intent(this, ScorePad.class);
                 intent.putExtra(TEAM_1, t1Name);
-                intent.putExtra(TEAM_2, t2Name);
+                intent.putExtra(TEAM_2, t2Name);*/
 
-                startActivity(intent);
+                //Create New Game
+                Game newGame = new Game(this, t1Name, t2Name);
+                newGame.insertNewGameToDB();
+                newGame.launchGame();
+
 
             }
         }
