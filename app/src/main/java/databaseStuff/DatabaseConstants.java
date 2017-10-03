@@ -1,4 +1,4 @@
-package com.slistersoft.slistersoftspadesscorepad;
+package databaseStuff;
 
 /**
  * Created by slist on 9/24/2017.

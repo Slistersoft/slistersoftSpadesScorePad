@@ -3,7 +3,6 @@ package com.slistersoft.slistersoftspadesscorepad;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import java.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -12,7 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import java.util.Calendar;
+
+import databaseStuff.GameSaveDatabase;
 
 @SuppressWarnings("UnusedParameters")
 public class MainActivity extends AppCompatActivity {

@@ -3,9 +3,10 @@ package com.slistersoft.slistersoftspadesscorepad;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
-
 import java.util.ArrayList;
+
+import databaseStuff.DatabaseConstants;
+import databaseStuff.GameSaveDatabase;
 
 /**
  * Created by slist on 9/24/2017.
@@ -125,7 +126,7 @@ public class Game implements DatabaseConstants {
 
     /**
      * Builds game object from data in cursor.
-     * @param gameCursor Cursor containing ALL rows in the Games table.
+     * @param gameCursor Cursor containing ALL COLUMNS in the Games table.
      * @param curserPositionToGet Index in cursor you want to grab from. Use this if the cursor contains multiple rows.
      * @return Game object from specified cursor index.
      */
@@ -243,7 +244,7 @@ public class Game implements DatabaseConstants {
 
         ArrayList<Game> games = new ArrayList<>();
 
-        Cursor gamesCursor = gameDB.getCursorFromSelectQuery("SELECT " + GAMES_COLUMN_ID + " WHERE " + GAMES_COLUMN_ISGAMECOMPLETE + " = 0");
+        Cursor gamesCursor = gameDB.getCursorFromSelectQuery("SELECT * FROM " + TABLE_GAMES + " WHERE " + GAMES_COLUMN_ISGAMECOMPLETE + " = 0 ORDER BY " + GAMES_COLUMN_DATESTARTED + " DESC");
 
         try {
             //Cursor starts before first result so first run of loop will start at first item
