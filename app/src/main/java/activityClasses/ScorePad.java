@@ -25,6 +25,8 @@ import android.widget.TextView;
 
 import customClasses.CUSTOM_FUNCTIONS;
 import customClasses.Game;
+import customClasses.Hand;
+
 import com.slistersoft.slistersoftspadesscorepad.R;
 
 
@@ -73,9 +75,7 @@ public class ScorePad extends AppCompatActivity {
     int INT_SANDBAG_PENALTY = 0;
 
     int
-            t1Score = 0,
             t1OldScore = 0,
-            t2Score = 0,
             t2OldScore = 0;
 
     int
@@ -100,10 +100,6 @@ public class ScorePad extends AppCompatActivity {
             t2BooksEntered = false,
             blnFirstHandBid = false,
             blnNoOversMode = false;
-
-    String
-            team1Name,
-            team2Name;
 
     TextView
             tvT1TeamNameDisplay = null,
@@ -157,7 +153,7 @@ public class ScorePad extends AppCompatActivity {
 
             updatePreferences();
 
-            if (t1Score == 0 && t2Score == 0 && !blnFirstHandBid){
+            if (currentGame.getTeam1Score() == 0 && currentGame.getTeam2Score() == 0 && !blnFirstHandBid){
                 custFuncs.MsgBox(getString(R.string.FirstHandBidNotAllowedMsg), true);
             }
             else {
@@ -181,7 +177,7 @@ public class ScorePad extends AppCompatActivity {
 
         closeFABMenu();
 
-        if((t1Score == 0 && t2Score == 0) && (!t1BidEntered || !t2BidEntered) &&  blnFirstHandBid){
+        if((currentGame.getTeam1Score() == 0 && currentGame.getTeam2Score() == 0) && (!t1BidEntered || !t2BidEntered) &&  blnFirstHandBid){
             custFuncs.MsgBox(this,"You must place bids for both teams before entering the books.", true);
         }
         else{
@@ -221,14 +217,14 @@ public class ScorePad extends AppCompatActivity {
 
             updatePreferences();
 
-            i.putExtra(INTENT_KEY_TEAM1_NAME, team1Name);
-            i.putExtra(INTENT_KEY_TEAM2_NAME, team2Name);
+            i.putExtra(INTENT_KEY_TEAM1_NAME, currentGame.getTeam1Name());
+            i.putExtra(INTENT_KEY_TEAM2_NAME, currentGame.getTeam2Name());
             i.putExtra(INTENT_KEY_REGULAR_MIN_BID, INT_REGULAR_MIN_BID);
             i.putExtra(INTENT_KEY_BLIND_BID_DEFICIT_REQUIRED, INT_BLIND_BID_DEFICIT_REQUIRED);
             i.putExtra(INTENT_KEY_BLIND_MIN_BID, INT_BLIND_MIN_BID);
             i.putExtra(INTENT_KEY_NIL_MIN_BID, INT_NIL_MIN_BID);
-            i.putExtra(INTENT_KEY_T1_SCORE, t1Score);
-            i.putExtra(INTENT_KEY_T2_SCORE, t2Score);
+            i.putExtra(INTENT_KEY_T1_SCORE, currentGame.getTeam1Score());
+            i.putExtra(INTENT_KEY_T2_SCORE, currentGame.getTeam2Score());
 
 
             return i;
@@ -322,7 +318,7 @@ public class ScorePad extends AppCompatActivity {
 
         try{
 
-            final CharSequence teamArray[] = {team1Name, team2Name};
+            final CharSequence teamArray[] = {currentGame.getTeam1Name(), currentGame.getTeam2Name()};
 
 
             //Ask user what team they are on
@@ -336,7 +332,7 @@ public class ScorePad extends AppCompatActivity {
                             String losePrefix = getResources().getString(R.string.teamLosePrefix) + "\n\n";
                             String winPrefix = getResources().getString(R.string.teamWonPrefix) + "\n\n";
                             String tiePrefix = getResources().getString(R.string.teamTiePrefix) + "\n\n";
-                            String meatAndPotatoes = team1Name + ": " + t1Score + " " + team2Name + ": " + t2Score + "\n\n";
+                            String meatAndPotatoes = currentGame.getTeam1Name() + ": " + currentGame.getTeam1Score() + " " + currentGame.getTeam2Name() + ": " + currentGame.getTeam2Score() + "\n\n";
                             String appName = getResources().getString(R.string.app_name);
                             String shortPlayStoreLink = getResources().getString(R.string.shortPlayStoreURL);
                             String conclusion = "And keeping score was easy because I used Slistersoft " + appName + ".\n\nCheck it out on the play store for FREE!\n\n" + shortPlayStoreLink;
@@ -344,9 +340,9 @@ public class ScorePad extends AppCompatActivity {
 
                             int winningTeamNum;
 
-                            if(t1Score > t2Score)
+                            if(currentGame.getTeam1Score() > currentGame.getTeam2Score())
                                 winningTeamNum = 1;
-                            else if(t2Score > t1Score)
+                            else if(currentGame.getTeam2Score() > currentGame.getTeam1Score())
                                 winningTeamNum = 2;
                             else
                                 winningTeamNum = 0;
@@ -461,9 +457,6 @@ public class ScorePad extends AppCompatActivity {
             //Get game object
             currentGame = new Game(this).getGameFromDB(intent.getLongExtra(Game.INTENT_KEY_GAMEID, -1));
 
-            team1Name = currentGame.getTeam1Name();// intent.getStringExtra(MainActivity.TEAM_1);
-            team2Name = currentGame.getTeam2Name(); //intent.getStringExtra(MainActivity.TEAM_2);
-
             //Setup Control References
 
             //Labels
@@ -481,8 +474,8 @@ public class ScorePad extends AppCompatActivity {
 
 
             //Set Labels
-            tvT1TeamNameDisplay.setText(team1Name);
-            tvT2TeamNameDisplay.setText(team2Name);
+            tvT1TeamNameDisplay.setText(currentGame.getTeam1Name());
+            tvT2TeamNameDisplay.setText(currentGame.getTeam2Name());
 
             //Setup FAB Menu
 
@@ -508,7 +501,7 @@ public class ScorePad extends AppCompatActivity {
             animSlideInCardT1 = AnimationUtils.loadAnimation(this, R.anim.slide_in_card);
             animSlideInCardT2 = AnimationUtils.loadAnimation(this, R.anim.slide_in_card);
 
-            updateScores(t1Score, t2Score);
+            updateScores(currentGame.getTeam1Score(), currentGame.getTeam2Score());
 
         }
         catch(Exception e){
@@ -535,11 +528,11 @@ public class ScorePad extends AppCompatActivity {
             //Save UI state changes to the savedInstanceState
             //Which is then passed to onCreate after it is killed and restarted
 
-            savedInstanceState.putInt(INTENT_KEY_T1_SCORE, t1Score);
+            savedInstanceState.putInt(INTENT_KEY_T1_SCORE, currentGame.getTeam1Score());
             savedInstanceState.putInt(INTENT_KEY_T1_OLD_SCORE, t1OldScore);
             savedInstanceState.putInt(INTENT_KEY_T1_BID, t1Bid);
 
-            savedInstanceState.putInt(INTENT_KEY_T2_SCORE, t2Score);
+            savedInstanceState.putInt(INTENT_KEY_T2_SCORE, currentGame.getTeam2Score());
             savedInstanceState.putInt(INTENT_KEY_T2_OLD_SCORE, t2OldScore);
             savedInstanceState.putInt(INTENT_KEY_T2_BID, t2Bid);
 
@@ -556,10 +549,7 @@ public class ScorePad extends AppCompatActivity {
         try{
             super.onRestoreInstanceState(savedInstanceState);
 
-            t1Score = savedInstanceState.getInt(INTENT_KEY_T1_OLD_SCORE);
-            t2Score = savedInstanceState.getInt(INTENT_KEY_T2_OLD_SCORE);
-
-            updateScores(savedInstanceState.getInt(INTENT_KEY_T1_SCORE), savedInstanceState.getInt(INTENT_KEY_T2_SCORE));
+            updateScores(currentGame.getTeam1Score(), currentGame.getTeam2Score());
 
             t1Bid = savedInstanceState.getInt(INTENT_KEY_T1_BID);
             t2Bid = savedInstanceState.getInt(INTENT_KEY_T2_BID);
@@ -708,8 +698,8 @@ public class ScorePad extends AppCompatActivity {
             final TextView t2Label = new TextView(this);
 
             //Set text for labels
-            t1Label.setText(team1Name + ":");
-            t2Label.setText(team2Name + ":");
+            t1Label.setText(currentGame.getTeam1Name() + ":");
+            t2Label.setText(currentGame.getTeam2Name() + ":");
 
             //Set up input boxes
             //Team 1 box
@@ -719,7 +709,7 @@ public class ScorePad extends AppCompatActivity {
             t1Box.setInputType(InputType.TYPE_NUMBER_FLAG_SIGNED);
 
             //Set hint
-            t1Box.setHint("Current score: " + t1Score);
+            t1Box.setHint("Current score: " + currentGame.getTeam1Score());
 
             //Team 2 Box
             final EditText t2Box = new EditText(this);
@@ -728,7 +718,7 @@ public class ScorePad extends AppCompatActivity {
             t2Box.setInputType(InputType.TYPE_NUMBER_FLAG_SIGNED);
 
             //Set hint
-            t2Box.setHint("Current score: " + t2Score);
+            t2Box.setHint("Current score: " + currentGame.getTeam2Score());
 
             //Apply text boxes to dialog layout
             layout.addView(t1Label);
@@ -811,7 +801,7 @@ public class ScorePad extends AppCompatActivity {
 
         boolean firstHand;
 
-        firstHand = t1Score == 0 && t2Score == 0 && !blnFirstHandBid;
+        firstHand = currentGame.getTeam1Score() == 0 && currentGame.getTeam2Score() == 0 && !blnFirstHandBid;
 
         if (!firstHand && !blnNoOversMode){
             if (sandbags > INT_SANDBAG_LIMIT)
@@ -879,15 +869,15 @@ public class ScorePad extends AppCompatActivity {
 
             String scoreSum =
 
-                    getEarnedPointsHumanSummaryString(team1Name, t1Bid, t1Books, t1Sandbags, t1EarnedPoints)
+                    getEarnedPointsHumanSummaryString(currentGame.getTeam1Name(), t1Bid, t1Books, t1Sandbags, t1EarnedPoints)
 
                             + "\n\n" +
 
-                            getEarnedPointsHumanSummaryString(team2Name,t2Bid,t2Books, t2Sandbags, t2EarnedPoints);
+                            getEarnedPointsHumanSummaryString(currentGame.getTeam2Name(),t2Bid,t2Books, t2Sandbags, t2EarnedPoints);
 
             custFuncs.MsgBox(this, scoreSum, false);
 
-            updateScores(t1EarnedPoints + t1Score , t2EarnedPoints + t2Score);
+            updateScores(t1EarnedPoints + currentGame.getTeam1Score() , t2EarnedPoints + currentGame.getTeam2Score());
 
         } catch (Exception e) {
         }
@@ -995,20 +985,19 @@ public class ScorePad extends AppCompatActivity {
             //get latest winning score pref
             updatePreferences();
 
-
             //Save current score for undo ability
-            t1OldScore = t1Score;
-            t2OldScore = t2Score;
+            t1OldScore = currentGame.getTeam1Score();
+            t2OldScore = currentGame.getTeam2Score();
 
             //Update Scores
-            t1Score = t1NewScore;
-            t2Score = t2NewScore;
+            currentGame.setTeam1Score(t1NewScore);
+            currentGame.setTeam2Score(t2NewScore);
 
-            tvT1ScoreDisplay.setText("Score: " + t1Score);
-            tvT2ScoreDisplay.setText("Score: " + t2Score);
+            tvT1ScoreDisplay.setText(getString(R.string.scoreCardScoreNumPrefix) + currentGame.getTeam1Score());
+            tvT2ScoreDisplay.setText(getString(R.string.scoreCardScoreNumPrefix) + currentGame.getTeam2Score());
 
 
-            if (t1Score == 0 && t2Score == 0)
+            if (currentGame.getTeam1Score() == 0 && currentGame.getTeam2Score() == 0)
                 setUndoButtonVisibility(false);
             else
                 setUndoButtonVisibility(true);
@@ -1016,6 +1005,7 @@ public class ScorePad extends AppCompatActivity {
             //Update points to win labels
             updateScoreToWinLabels(t1NewScore, t2NewScore);
 
+            currentGame.saveChangesToDB();
 
         }
         catch (Exception e){

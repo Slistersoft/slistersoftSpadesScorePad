@@ -3,16 +3,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-
             <EditText
                 android:id="@+id/editTxtTeam1Name"
                 android:layout_width="match_parent"
@@ -21,9 +11,8 @@
                 android:ems="10"
                 android:hint="@string/team1DefaultHint"
                 android:inputType="textPersonName"
-                android:text="@string/team1DefaultLabel" >
+                android:text="@string/team1DefaultLabel">
 
-                <requestFocus />
             </EditText>
 
             <EditText
@@ -36,42 +25,48 @@
                 android:inputType="textPersonName"
                 android:text="@string/team2DefaultLabel" />
 
+
             <Button
+                android:id="@+id/btnStartNewGame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/mainActivityBtnPadding"
+                android:background="@color/colorPrimary"
                 android:elevation="10dp"
                 android:onClick="startNewGame"
+                android:padding="@dimen/mainActivityBtnPadding"
                 android:text="@string/startGameBtnText"
-                android:background="@color/colorPrimary"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="8dp"/>
+                android:textColor="@android:color/white" />
 
             <Button
+                android:id="@+id/btnLoadGame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="openPlayStorePage"
                 android:background="@color/colorPrimary"
-                android:textColor="@android:color/white"
-                android:layout_marginBottom="8dp"
-                android:text="@string/rateBtnText" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/feedBackBtnText"
-                android:background="@color/colorPrimary"
-                android:textColor="@android:color/white"
-                android:onClick="sendFeedback" />
-
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:onClick="launchGamePicker"
-                android:text="Load Game Picker" />
+                android:layout_marginBottom="@dimen/mainActivityBtnPadding"
+                android:padding="@dimen/mainActivityBtnPadding"
+                android:text="Load Game Picker"
+                android:textColor="@android:color/white" />
 
-        </LinearLayout>
-    </ScrollView>
+
+            <Button
+                android:id="@+id/btnRateApp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/mainActivityBtnPadding"
+                android:background="@color/colorPrimary"
+                android:onClick="openPlayStorePage"
+                android:text="@string/rateBtnText"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btnSendFeedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:onClick="sendFeedback"
+                android:text="@string/feedBackBtnText"
+                android:textColor="@android:color/white" />
 
 </LinearLayout>

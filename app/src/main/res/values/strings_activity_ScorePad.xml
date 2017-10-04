@@ -14,5 +14,6 @@
     <string name="UnsavedGameWarning">Are you sure you want to exit this game? This will reset the current score.</string>
     <string name="exitGameButtonText">Yes</string>
     <string name="exitGameNegativeButtonText">No</string>
+    <string name="scoreCardScoreNumPrefix">Score:\u0020</string>
 
 </resources>

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import customClasses.CUSTOM_FUNCTIONS;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText t1NameBox=null , t2NameBox = null;
 
+    private Button btnLoadGames = null;
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -49,13 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void launchGamePicker(View v){
 
-        try {
-            Intent intent = new Intent(this, GamePickerActivity.class);
-            startActivity(intent);
-        } catch (Exception e) {
-            custFuncs.MsgBox(getString(R.string.launchGamePickerError), true);
-            e.printStackTrace();
-        }
+        new Game(this).launchGamePicker();
 
     }
 
@@ -93,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
             t1NameBox = (EditText)findViewById(R.id.editTxtTeam1Name);
             t2NameBox = (EditText)findViewById(R.id.editTxtTeam2Name);
+            btnLoadGames = (Button)findViewById(R.id.btnLoadGame);
 
             //Load team names from preferences
             String t1Name = custFuncs.getPreference(this.getApplicationContext(), this.getResources().getString(R.string.pref_key_team1DefaultName), this.getResources().getString(R.string.pref_default_team1DefaultName));
@@ -103,6 +101,14 @@ public class MainActivity extends AppCompatActivity {
 
             //Initialize Database
             dbHandler = new GameSaveDatabase(this);
+
+            if(new Game(this).checkForIncompleteGames()){
+                btnLoadGames.setVisibility(View.VISIBLE);
+            }
+            else{
+                btnLoadGames.setVisibility(View.GONE);
+            }
+
 
         }
         catch(Exception e){

@@ -24,6 +24,10 @@
     <string name="team_2_name_placeholder">Team 2 Name</string>
     <string name="score_placeholder">Score: 350</string>
     <string name="bid_placeholder">Bid: 0</string>
+    <string name="loadGamePromptTitle">Resume previous game?</string>
+    <string name="loadGamePromptMessage">There are saved game(s) that you have not finished yet. Would you like to pick one to resume?</string>
+    <string name="loadGamePromptNegativeButtonText">No, I want a fresh start</string>
+    <string name="gameSaveSuccessMsg">Game Updates Saved Successfully</string>
 
 
 </resources>

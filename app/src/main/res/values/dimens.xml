@@ -9,5 +9,6 @@
     <dimen name="landCardPadding">10dp</dimen>
     <dimen name="rv_cardHeader1FontSize">24sp</dimen>
     <dimen name="rv_cardHeader2FontSize">18sp</dimen>
+    <dimen name="mainActivityBtnPadding">8dp</dimen>
 
 </resources>

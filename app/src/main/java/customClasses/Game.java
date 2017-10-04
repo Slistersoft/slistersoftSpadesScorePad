@@ -1,7 +1,9 @@
 package customClasses;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 
@@ -9,6 +11,7 @@ import com.slistersoft.slistersoftspadesscorepad.R;
 
 import java.util.ArrayList;
 
+import activityClasses.GamePickerActivity;
 import activityClasses.ScorePad;
 import databaseStuff.DatabaseConstants;
 import databaseStuff.GameSaveDatabase;
@@ -49,6 +52,11 @@ public class Game implements DatabaseConstants {
         this(callingContext, -1, System.currentTimeMillis(), team1Name,team2Name,false,0,0);
     }
 
+    public Game(Context callingContext, long id) {
+        this.callingContext = callingContext;
+        this.id = id;
+    }
+
     public Game(Context callingContext){
 
         this(callingContext, "","");
@@ -78,7 +86,12 @@ public class Game implements DatabaseConstants {
 
         try {
 
-            custFuncs.showToast("Updated " + gameDB.updateRecordsInDB(TABLE_GAMES, getContentValues(), GAMES_COLUMN_ID + " = " + getId()) + " rows");
+            if(gameDB.updateRecordsInDB(TABLE_GAMES, getContentValues(), GAMES_COLUMN_ID + " = " + getId()) > 0 ) {
+                custFuncs.showToast(callingContext.getString(R.string.gameSaveSuccessMsg));
+            }
+            else{
+                custFuncs.showToast(callingContext.getString(R.string.updateGameDBErrorMsg));
+            }
         } catch (Exception e) {
             custFuncs.showToast(callingContext.getString(R.string.updateGameDBErrorMsg));
             e.printStackTrace();
@@ -186,7 +199,7 @@ public class Game implements DatabaseConstants {
         this.id = id;
     }
 
-    public static String getCreateTableQuery(){
+    public String getCreateTableQuery(){
 
         String createGamesTableStatement = "CREATE TABLE " + TABLE_GAMES + "("
                 + GAMES_COLUMN_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, "
@@ -324,7 +337,17 @@ public class Game implements DatabaseConstants {
         this.team2Score = team2Score;
     }
 
+    public Context getCallingContext() {
+        return callingContext;
+    }
+
+    public void setCallingContext(Context callingContext) {
+        this.callingContext = callingContext;
+    }
+
     //endregion
+
+    //region UI Stuff
 
     public void launchGame(){
 
@@ -339,4 +362,70 @@ public class Game implements DatabaseConstants {
 
 
     }
+
+    public void launchGamePicker(){
+
+        try {
+            Intent i = new Intent(callingContext, GamePickerActivity.class);
+            callingContext.startActivity(i);
+        } catch (Exception e) {
+            custFuncs.MsgBox(callingContext.getString(R.string.launchGamePickerError));
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Checks to see if there are any incomplete games in the database  and will prompt the user to ask them if they want to pick one to load if there are any.
+     */
+    public boolean checkForIncompleteGames(){
+
+        if(getInCompleteGames().size() >= 0){
+
+            //Ask user if they want to load a game
+
+            try {
+                //Build Dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(callingContext);
+
+                builder.setTitle(R.string.loadGamePromptTitle);
+                builder.setMessage(R.string.loadGamePromptMessage);
+
+                builder.setPositiveButton(callingContext.getString(R.string.loadGamePromptPositiveButtonText), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        launchGamePicker();
+                        dialog.dismiss();
+
+                    }
+                });
+
+                builder.setNegativeButton(callingContext.getString(R.string.loadGamePromptNegativeButtonText), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
+                return true;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+
+        }
+        else{
+            return false;
+        }
+
+    }
+
+
+
+    //endregion
 }

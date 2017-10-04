@@ -11,7 +11,7 @@
     <string name="emailPickerDialogText">Pick an app, any app ;)</string>
     <string name="feedBackBtnText">Send Me Direct Feedback</string>
     <string name="rateBtnText">Rate This App</string>
-    <string name="startGameBtnText">Start Game</string>
+    <string name="startGameBtnText">Start New Game</string>
     <string name="team1DefaultHint">Team 1 Name</string>
     <string name="team2DefaultHint">Team 2 Name</string>
     <string name="defaultDialogCancelBtnTxt">Nevermind</string>
