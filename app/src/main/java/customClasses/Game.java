@@ -199,7 +199,7 @@ public class Game implements DatabaseConstants {
         this.id = id;
     }
 
-    public String getCreateTableQuery(){
+    public static String getCreateTableQuery(){
 
         String createGamesTableStatement = "CREATE TABLE " + TABLE_GAMES + "("
                 + GAMES_COLUMN_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, "
@@ -380,7 +380,7 @@ public class Game implements DatabaseConstants {
      */
     public boolean checkForIncompleteGames(){
 
-        if(getInCompleteGames().size() >= 0){
+        if(getInCompleteGames().size() > 0){
 
             //Ask user if they want to load a game
 

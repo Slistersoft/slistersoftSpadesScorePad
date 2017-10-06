@@ -6,7 +6,7 @@ package databaseStuff;
 
 public interface DatabaseConstants {
 
-    int DATABASE_VERSION = 5;
+    int DATABASE_VERSION = 8;
     String DATABASE_NAME = "GameSaves.db";
 
     //region Game Table Constants
@@ -24,5 +24,15 @@ public interface DatabaseConstants {
     String TABLE_HANDS = "HANDS";
     String HANDS_COLUMN_ID = "HandsID";
     String HANDS_COLUMN_GAMEID = GAMES_COLUMN_ID;
+    String HANDS_COLUMN_HANDNUM = "HandNum";
+    String HANDS_COLUMN_T1BID = "T1Bid";
+    String HANDS_COLUMN_T1ISBLIND = "T1IsBlind";
+    String HANDS_COLUMN_T1ISNIL = "T1IsNil";
+    String HANDS_COLUMN_T1BOOKSEARNED = "T1BooksEarned";
+    String HANDS_COLUMN_T2BID = "T2Bid";
+    String HANDS_COLUMN_T2ISBLIND = "T2IsBlind";
+    String HANDS_COLUMN_T2ISNIL = "T2IsNil";
+    String HANDS_COLUMN_T2BOOKSEARNED = "T2BooksEarned";
+
     //endregion
 }

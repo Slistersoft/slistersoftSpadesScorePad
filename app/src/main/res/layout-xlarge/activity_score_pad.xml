@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:elevation="1dp"
+    android:onClick="toggleFABMenu"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -34,8 +35,8 @@
                 android:layout_weight="1"
                 android:background="@android:color/black"
                 android:clickable="true"
-                android:onClick="launchBidEnterScreen"
                 android:gravity="center"
+                android:onClick="launchBidEnterScreen"
                 android:text="@string/fab_place_bids"
                 android:textAlignment="center"
                 android:textColor="@android:color/white" />

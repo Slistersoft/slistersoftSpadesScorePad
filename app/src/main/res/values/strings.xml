@@ -2,4 +2,6 @@
 <resources>
     <string name="dialog_btn_ok">OK</string>
     <string name="loadGamePromptPositiveButtonText">Yes</string>
+    <string name="updateHandInDBSuccessMsg">Hand scores saved successfully</string>
+    <string name="updateHandInDBFailedMsg">Hand failed to save</string>
 </resources>

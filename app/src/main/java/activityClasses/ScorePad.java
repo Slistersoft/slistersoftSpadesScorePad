@@ -15,6 +15,7 @@ import android.support.v7.widget.CardView;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -38,6 +39,7 @@ public class ScorePad extends AppCompatActivity {
     //Reference to the Custom Functions class that has commonly used methods like toast and msgbox
     CUSTOM_FUNCTIONS custFuncs = new CUSTOM_FUNCTIONS(this);
     Game currentGame;
+    Hand currentHand;
 
     MediaPlayer sound = null;
 
@@ -454,8 +456,11 @@ public class ScorePad extends AppCompatActivity {
             //Receive Team Names
             Intent intent = getIntent();
 
-            //Get game object
+            //Get game objects
             currentGame = new Game(this).getGameFromDB(intent.getLongExtra(Game.INTENT_KEY_GAMEID, -1));
+            currentHand = new Hand(this, currentGame);
+
+            currentHand.insertNewHandToDB();
 
             //Setup Control References
 

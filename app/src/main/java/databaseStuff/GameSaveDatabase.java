@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import customClasses.CUSTOM_FUNCTIONS;
 import customClasses.Game;
+import customClasses.Hand;
+
 import com.slistersoft.slistersoftspadesscorepad.R;
 
 import java.text.SimpleDateFormat;
@@ -40,7 +42,11 @@ public class GameSaveDatabase extends SQLiteOpenHelper implements DatabaseConsta
     public void onCreate(SQLiteDatabase db) {
 
         try {
+
+            //Create Games and Hands tables
             db.execSQL(Game.getCreateTableQuery());
+            db.execSQL(Hand.getCreateTableQuery());
+
         } catch (SQLException e) {
             custFuncs.showToast(callingContext.getString(R.string.onCreateErrorMsg));
             e.printStackTrace();
@@ -53,6 +59,7 @@ public class GameSaveDatabase extends SQLiteOpenHelper implements DatabaseConsta
 
         try {
             db.execSQL(getDropTableStatement(TABLE_GAMES));
+            db.execSQL(getDropTableStatement(TABLE_HANDS));
             onCreate(db);
         } catch (SQLException e) {
             custFuncs.showToast(callingContext.getString(R.string.onUpgradeErrorMsg));

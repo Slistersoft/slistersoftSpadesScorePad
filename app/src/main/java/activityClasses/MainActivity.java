@@ -102,18 +102,30 @@ public class MainActivity extends AppCompatActivity {
             //Initialize Database
             dbHandler = new GameSaveDatabase(this);
 
-            if(new Game(this).checkForIncompleteGames()){
-                btnLoadGames.setVisibility(View.VISIBLE);
-            }
-            else{
-                btnLoadGames.setVisibility(View.GONE);
-            }
+            checkForSavedGames();
 
 
         }
         catch(Exception e){
             custFuncs.MsgBox(this, e.getMessage(),true);
         }
+
+    }
+
+    private void checkForSavedGames() {
+        if(new Game(this).checkForIncompleteGames()){
+            btnLoadGames.setVisibility(View.VISIBLE);
+        }
+        else{
+            btnLoadGames.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        checkForSavedGames();
 
     }
 
