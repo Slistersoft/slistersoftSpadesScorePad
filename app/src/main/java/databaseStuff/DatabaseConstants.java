@@ -6,7 +6,7 @@ package databaseStuff;
 
 public interface DatabaseConstants {
 
-    int DATABASE_VERSION = 8;
+    int DATABASE_VERSION = 10;
     String DATABASE_NAME = "GameSaves.db";
 
     //region Game Table Constants

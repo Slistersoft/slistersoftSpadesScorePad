@@ -15,5 +15,7 @@
     <string name="exitGameButtonText">Yes</string>
     <string name="exitGameNegativeButtonText">No</string>
     <string name="scoreCardScoreNumPrefix">Score:\u0020</string>
+    <string name="getHandFromDBFailMsg">Error loading hand</string>
+    <string name="insertNewHandToDBSuccessMsg">New hand saved</string>
 
 </resources>

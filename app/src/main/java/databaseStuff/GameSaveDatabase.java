@@ -162,6 +162,38 @@ public class GameSaveDatabase extends SQLiteOpenHelper implements DatabaseConsta
 
     }
 
+    /**
+     * Converts 1 or 0 to boolean.
+     * @param numericBit pass 1 or 0
+     * @return boolean
+     */
+    public boolean getBooleanFromInt(int numericBit){
+
+        if (numericBit == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
+    /**
+     * Converts boolean to 1 or 0 for insertion into the DB.
+     * @param boolToConvert true or false value to convert
+     * @return 1 for true 0 for false.
+     */
+    public int getIntFromBoolean(boolean boolToConvert){
+
+        if(boolToConvert){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+
+    }
+
 
 
     /**

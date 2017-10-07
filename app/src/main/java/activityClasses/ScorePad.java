@@ -15,7 +15,6 @@ import android.support.v7.widget.CardView;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -81,21 +80,13 @@ public class ScorePad extends AppCompatActivity {
             t2OldScore = 0;
 
     int
-            t1Bid = 0,
-            t1Books = 0,
             t1Sandbags = 0,
             t1EarnedPoints = 0,
 
-    t2Bid = 0,
-            t2Books = 0,
             t2Sandbags = 0,
             t2EarnedPoints = 0;
 
     boolean
-            t1Blind = false,
-            t2Blind = false,
-            t1Nil = false ,
-            t2Nil = false,
             t1BidEntered = false,
             t2BidEntered = false,
             t1BooksEntered = false,
@@ -199,11 +190,11 @@ public class ScorePad extends AppCompatActivity {
     private void updateBidDisplays(){
 
         try {
-            tvT1BidDisplay.setText(getBidString(t1Bid, t1Blind, t1Nil));
-            tvT2BidDisplay.setText(getBidString(t2Bid, t2Blind, t2Nil));
+            tvT1BidDisplay.setText(getBidString(currentHand.getT1Bid(), currentHand.isT1Blind(), currentHand.isT1Nil()));
+            tvT2BidDisplay.setText(getBidString(currentHand.getT2Bid(), currentHand.isT2Blind(), currentHand.isT2Nil()));
 
-            t1BidEntered = true;
-            t2BidEntered = true;
+            t1BidEntered = currentHand.getT1Bid() != 0;
+            t2BidEntered = currentHand.getT2Bid() != 0;
 
         } catch (Exception e) {
             custFuncs.MsgBox("Error displaying bids.");
@@ -228,7 +219,6 @@ public class ScorePad extends AppCompatActivity {
             i.putExtra(INTENT_KEY_T1_SCORE, currentGame.getTeam1Score());
             i.putExtra(INTENT_KEY_T2_SCORE, currentGame.getTeam2Score());
 
-
             return i;
         }
         catch (Exception ex){
@@ -248,13 +238,15 @@ public class ScorePad extends AppCompatActivity {
                 if(resultCode == Activity.RESULT_OK){
 
                     try {
-                        t1Bid = data.getIntExtra(INTENT_KEY_T1_BID, 0);
-                        t1Blind = data.getBooleanExtra(INTENT_KEY_T1_BLIND, false);
-                        t1Nil = data.getBooleanExtra(INTENT_KEY_T1_NIL, false);
+                        currentHand.setT1Bid(data.getIntExtra(INTENT_KEY_T1_BID, 0));
+                        currentHand.setT1Blind(data.getBooleanExtra(INTENT_KEY_T1_BLIND, false));
+                        currentHand.setT2Nil(data.getBooleanExtra(INTENT_KEY_T1_NIL, false));
 
-                        t2Bid = data.getIntExtra(INTENT_KEY_T2_BID, 0);
-                        t2Blind = data.getBooleanExtra(INTENT_KEY_T2_BLIND, false);
-                        t2Nil = data.getBooleanExtra(INTENT_KEY_T2_NIL, false);
+                        currentHand.setT2Bid(data.getIntExtra(INTENT_KEY_T2_BID, 0));
+                        currentHand.setT2Blind(data.getBooleanExtra(INTENT_KEY_T2_BLIND, false));
+                        currentHand.setT2Nil(data.getBooleanExtra(INTENT_KEY_T2_NIL, false));
+
+                        currentHand.saveChangesToDB();
 
                         updateBidDisplays();
 
@@ -271,11 +263,13 @@ public class ScorePad extends AppCompatActivity {
 
                 if(resultCode == Activity.RESULT_OK){
 
-                    t1Books = data.getIntExtra(INTENT_KEY_T1_BOOKS, 0);
-                    t2Books = data.getIntExtra(INTENT_KEY_T2_BOOKS, 0);
+                    currentHand.setT1BooksEarned(data.getIntExtra(INTENT_KEY_T1_BOOKS, 0));
+                    currentHand.setT2BooksEarned(data.getIntExtra(INTENT_KEY_T2_BOOKS, 0));
 
                     t1BooksEntered = true;
                     t2BooksEntered = true;
+
+                    currentHand.saveChangesToDB();
 
                     tallyScores();
 
@@ -458,9 +452,7 @@ public class ScorePad extends AppCompatActivity {
 
             //Get game objects
             currentGame = new Game(this).getGameFromDB(intent.getLongExtra(Game.INTENT_KEY_GAMEID, -1));
-            currentHand = new Hand(this, currentGame);
-
-            currentHand.insertNewHandToDB();
+            currentHand = new Hand(this, currentGame).getHandFromDB();
 
             //Setup Control References
 
@@ -506,7 +498,7 @@ public class ScorePad extends AppCompatActivity {
             animSlideInCardT1 = AnimationUtils.loadAnimation(this, R.anim.slide_in_card);
             animSlideInCardT2 = AnimationUtils.loadAnimation(this, R.anim.slide_in_card);
 
-            updateScores(currentGame.getTeam1Score(), currentGame.getTeam2Score());
+            updateScores(currentGame.getTeam1Score(), currentGame.getTeam2Score(), true);
 
         }
         catch(Exception e){
@@ -535,11 +527,11 @@ public class ScorePad extends AppCompatActivity {
 
             savedInstanceState.putInt(INTENT_KEY_T1_SCORE, currentGame.getTeam1Score());
             savedInstanceState.putInt(INTENT_KEY_T1_OLD_SCORE, t1OldScore);
-            savedInstanceState.putInt(INTENT_KEY_T1_BID, t1Bid);
+            savedInstanceState.putInt(INTENT_KEY_T1_BID, currentHand.getT1Bid());
 
             savedInstanceState.putInt(INTENT_KEY_T2_SCORE, currentGame.getTeam2Score());
             savedInstanceState.putInt(INTENT_KEY_T2_OLD_SCORE, t2OldScore);
-            savedInstanceState.putInt(INTENT_KEY_T2_BID, t2Bid);
+            savedInstanceState.putInt(INTENT_KEY_T2_BID, currentHand.getT2Bid());
 
         }
         catch(Exception e){}
@@ -556,8 +548,8 @@ public class ScorePad extends AppCompatActivity {
 
             updateScores(currentGame.getTeam1Score(), currentGame.getTeam2Score());
 
-            t1Bid = savedInstanceState.getInt(INTENT_KEY_T1_BID);
-            t2Bid = savedInstanceState.getInt(INTENT_KEY_T2_BID);
+            currentHand.setT1Bid(savedInstanceState.getInt(INTENT_KEY_T1_BID));
+            currentHand.setT2Bid(savedInstanceState.getInt(INTENT_KEY_T2_BID));
 
             updateBidDisplays();
 
@@ -586,8 +578,8 @@ public class ScorePad extends AppCompatActivity {
 
             try{
 
-                t1Bid = Integer.parseInt(t1String);
-                t2Bid = Integer.parseInt(t2String);
+                currentHand.setT1Bid(Integer.parseInt(t1String));
+                currentHand.setT2Bid(Integer.parseInt(t2String));
 
             }
             catch (Exception e){
@@ -600,7 +592,7 @@ public class ScorePad extends AppCompatActivity {
             }
 
             //Check for under bidding
-            if(t1Bid + t2Bid < 13){
+            if(currentHand.getT1Bid() + currentHand.getT2Bid() < 13){
                 //sound = MediaPlayer.create(getApplicationContext(), R.raw.underbid);
                 //sound.start();
             }
@@ -770,8 +762,8 @@ public class ScorePad extends AppCompatActivity {
 
         updateScores(t1OldScore, t2OldScore);
 
-        t1Bid = 0;
-        t2Bid = 0;
+        currentHand.setT1Bid(0);
+        currentHand.setT2Bid(0);
 
         updateBidDisplays();
 
@@ -866,23 +858,25 @@ public class ScorePad extends AppCompatActivity {
 
         try {
 
-            t1Sandbags = getSandbagAmount(t1Bid, t1Books);
-            t2Sandbags = getSandbagAmount(t2Bid, t2Books);
+            t1Sandbags = getSandbagAmount(currentHand.getT1Bid(), currentHand.getT1BooksEarned());
+            t2Sandbags = getSandbagAmount(currentHand.getT2Bid(), currentHand.getT2BooksEarned());
 
-            t1EarnedPoints = getPointsEarned(t1Bid, t1Books,t1Sandbags, t1Blind, t1Nil);
-            t2EarnedPoints = getPointsEarned(t2Bid, t2Books,t2Sandbags, t2Blind, t2Nil);
+            t1EarnedPoints = getPointsEarned(currentHand.getT1Bid(), currentHand.getT1BooksEarned(),t1Sandbags, currentHand.isT1Blind(), currentHand.isT1Nil());
+            t2EarnedPoints = getPointsEarned(currentHand.getT2Bid(), currentHand.getT2BooksEarned(),t2Sandbags, currentHand.isT2Blind(), currentHand.isT2Nil());
 
             String scoreSum =
 
-                    getEarnedPointsHumanSummaryString(currentGame.getTeam1Name(), t1Bid, t1Books, t1Sandbags, t1EarnedPoints)
+                    getEarnedPointsHumanSummaryString(currentGame.getTeam1Name(), currentHand.getT1Bid(), currentHand.getT1BooksEarned(), t1Sandbags, t1EarnedPoints)
 
                             + "\n\n" +
 
-                            getEarnedPointsHumanSummaryString(currentGame.getTeam2Name(),t2Bid,t2Books, t2Sandbags, t2EarnedPoints);
+                            getEarnedPointsHumanSummaryString(currentGame.getTeam2Name(),currentHand.getT2Bid(),currentHand.getT2BooksEarned(), t2Sandbags, t2EarnedPoints);
 
             custFuncs.MsgBox(this, scoreSum, false);
 
             updateScores(t1EarnedPoints + currentGame.getTeam1Score() , t2EarnedPoints + currentGame.getTeam2Score());
+
+            currentHand.insertNewHandToDB();
 
         } catch (Exception e) {
         }
@@ -918,15 +912,17 @@ public class ScorePad extends AppCompatActivity {
 
         try{
 
+            currentHand.saveChangesToDB();
+
             //Clear variables
-            t1Bid = 0;
-            t1Books = 0;
+            currentHand.setT1Bid(0);
+            currentHand.setT1BooksEarned(0);
             t1BidEntered = false;
             t2BooksEntered = false;
             t1EarnedPoints = 0;
 
-            t2Bid = 0;
-            t2Books = 0;
+            currentHand.setT2Bid(0);
+            currentHand.setT2BooksEarned(0);
             t2BidEntered = false;
             t2BooksEntered = false;
             t2EarnedPoints = 0;
@@ -983,7 +979,13 @@ public class ScorePad extends AppCompatActivity {
 
     }
 
-    private void updateScores(int t1NewScore, int t2NewScore){
+    /**
+     * Updates scores, refreshes displays, and saves to database.
+     * @param t1NewScore
+     * @param t2NewScore
+     * @param gameStartup If set to true the bid information will be loaded from database and set instead of being cleared out.
+     */
+    private void updateScores(int t1NewScore, int t2NewScore, boolean gameStartup){
 
         try {
 
@@ -1010,14 +1012,32 @@ public class ScorePad extends AppCompatActivity {
             //Update points to win labels
             updateScoreToWinLabels(t1NewScore, t2NewScore);
 
-            currentGame.saveChangesToDB();
+            if(!gameStartup) {
+                currentGame.saveChangesToDB();
+            }
 
         }
         catch (Exception e){
             return;
         }
 
-        clearInputBoxes();
+        if(gameStartup){
+            updateBidDisplays();
+        }
+        else{
+            clearInputBoxes();
+        }
+
+    }
+
+    /**
+     * Updates scores, refreshes displays, and saves to database.
+     * @param t1NewScore
+     * @param t2NewScore
+     */
+    private void updateScores(int t1NewScore, int t2NewScore){
+
+        updateScores(t1NewScore, t2NewScore, false);
 
     }
 

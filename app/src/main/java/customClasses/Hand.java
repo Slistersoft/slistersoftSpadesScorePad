@@ -49,7 +49,7 @@ public class Hand implements DatabaseConstants {
 
         this(callingContext, parentGame, -1, 1, 0, 0, 0, 0, false, false, false, false);
 
-        setCurrentHandNum(getCurrentHandNumFromDB());
+        setHandNum(getCurrentHandNumFromDB());
 
     }
 
@@ -58,24 +58,91 @@ public class Hand implements DatabaseConstants {
 
     //region Database Stuff
 
-//    public Hand getCurrentHandFromDB(){
-//
-//    }
 
     public void insertNewHandToDB(){
 
+        setHandNum(getHandNum() + 1);
+
         setHandsID(db.insertRecordToDB(TABLE_HANDS, getContentValues()));
+        
+        custFuncs.showToast(callingContext.getString(R.string.insertNewHandToDBSuccessMsg));
 
     }
 
-    public void updateHandInDB(){
+    public void saveChangesToDB(){
 
         if(db.updateRecordsInDB(TABLE_HANDS, getContentValues(), HANDS_COLUMN_ID + " = " + getHandsID()) >= 1){
-            custFuncs.showToast(custFuncs.getString(R.string.updateHandInDBSuccessMsg));
+            custFuncs.showToast(callingContext.getString(R.string.updateHandInDBSuccessMsg));
         }
         else{
-            custFuncs.showToast(custFuncs.getString(R.string.updateHandInDBFailedMsg));
+            custFuncs.showToast(callingContext.getString(R.string.updateHandInDBFailedMsg));
         }
+
+    }
+
+    private boolean isHandInDB(){
+
+        return db.getCursorFromSelectQuery("SELECT * FROM " + TABLE_HANDS + " WHERE " + HANDS_COLUMN_ID + " = " + getHandsID()).moveToFirst();
+
+    }
+
+    /**
+     * Gets specified hand num from database.
+     * @param gameID gameID to get hand from.
+     * @param handNumToGet specified hand number to get from database within specified gameID.
+     * @return Populated Hand object.
+     */
+    public Hand getHandFromDB(long gameID, int handNumToGet){
+
+        Cursor h = db.getCursorFromSelectQuery("SELECT * FROM " + TABLE_HANDS + " WHERE " + HANDS_COLUMN_GAMEID + " = " + gameID + " AND " + HANDS_COLUMN_HANDNUM + " = " + handNumToGet);
+        Game game;
+        Hand hand;
+
+        if(h.moveToFirst()) {
+
+            if (parentGame.getId() == gameID) {
+                game = parentGame;
+            } else {
+                game = new Game(callingContext).getGameFromDB(gameID);
+            }
+
+            hand = new Hand(callingContext, game);
+
+            try {
+                hand.setHandsID(h.getLong(h.getColumnIndex(HANDS_COLUMN_ID)));
+                hand.setHandNum(h.getInt(h.getColumnIndex(HANDS_COLUMN_HANDNUM)));
+
+                hand.setT1Bid(h.getInt(h.getColumnIndex(HANDS_COLUMN_T1BID)));
+                hand.setT1Blind(db.getBooleanFromInt(h.getInt(h.getColumnIndex(HANDS_COLUMN_T1ISBLIND))));
+                hand.setT1Nil(db.getBooleanFromInt(h.getInt(h.getColumnIndex(HANDS_COLUMN_T1ISNIL))));
+                hand.setT1BooksEarned(h.getInt(h.getColumnIndex(HANDS_COLUMN_T1BOOKSEARNED)));
+
+                hand.setT2Bid(h.getInt(h.getColumnIndex(HANDS_COLUMN_T2BID)));
+                hand.setT2Blind(db.getBooleanFromInt(h.getInt(h.getColumnIndex(HANDS_COLUMN_T2ISBLIND))));
+                hand.setT2Nil(db.getBooleanFromInt(h.getInt(h.getColumnIndex(HANDS_COLUMN_T2ISNIL))));
+                hand.setT2BooksEarned(h.getInt(h.getColumnIndex(HANDS_COLUMN_T2BOOKSEARNED)));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                custFuncs.showToast(callingContext.getString(R.string.getHandFromDBFailMsg));
+            }
+        }
+        else{
+            hand = this;
+            hand.insertNewHandToDB();
+        }
+
+        return hand;
+
+    }
+
+    /**
+     * Gets the most recent Hand object from the database. This is assuming that the parentGame object is assigned the proper ID.
+     * @return Populated hand object.
+     */
+    public Hand getHandFromDB(){
+
+        return getHandFromDB(parentGame.getId(), getCurrentHandNumFromDB());
 
     }
 
@@ -101,12 +168,6 @@ public class Hand implements DatabaseConstants {
     //endregion
 
     //region Getters and Setters
-
-//    private Hand getHandFromCursor(Cursor cursorWithHandData){
-//
-//
-//
-//    }
 
     public static String getCreateTableQuery() {
         return "CREATE TABLE " + TABLE_HANDS + " (" +
@@ -146,10 +207,6 @@ public class Hand implements DatabaseConstants {
 
     public int getCurrentHandNum() {
         return this.handNum;
-    }
-
-    public void setCurrentHandNum(int currentHandNum) {
-        this.handNum = currentHandNum;
     }
 
     public long getHandsID() {
