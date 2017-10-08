@@ -17,5 +17,6 @@
     <string name="scoreCardScoreNumPrefix">Score:\u0020</string>
     <string name="getHandFromDBFailMsg">Error loading hand</string>
     <string name="insertNewHandToDBSuccessMsg">New hand saved</string>
+    <string name="enterBidsBeforeBooksMsg">You must place bids for both teams before entering the books.</string>
 
 </resources>

@@ -191,7 +191,7 @@ public class Hand implements DatabaseConstants {
         ContentValues cv = new ContentValues();
 
         cv.put(HANDS_COLUMN_GAMEID, parentGame.getId());
-        cv.put(HANDS_COLUMN_HANDNUM, getCurrentHandNum());
+        cv.put(HANDS_COLUMN_HANDNUM, getHandNum());
         cv.put(HANDS_COLUMN_T1BID, getT1Bid());
         cv.put(HANDS_COLUMN_T1ISBLIND, isT1Blind());
         cv.put(HANDS_COLUMN_T1ISNIL, isT1Nil());
@@ -203,10 +203,6 @@ public class Hand implements DatabaseConstants {
 
         return cv;
 
-    }
-
-    public int getCurrentHandNum() {
-        return this.handNum;
     }
 
     public long getHandsID() {

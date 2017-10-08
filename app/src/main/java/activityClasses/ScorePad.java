@@ -91,7 +91,7 @@ public class ScorePad extends AppCompatActivity {
             t2BidEntered = false,
             t1BooksEntered = false,
             t2BooksEntered = false,
-            blnFirstHandBid = false,
+            blnFirstHandBiddingAllowed = false,
             blnNoOversMode = false;
 
     TextView
@@ -146,7 +146,7 @@ public class ScorePad extends AppCompatActivity {
 
             updatePreferences();
 
-            if (currentGame.getTeam1Score() == 0 && currentGame.getTeam2Score() == 0 && !blnFirstHandBid){
+            if (currentGame.getTeam1Score() == 0 && currentGame.getTeam2Score() == 0 && !blnFirstHandBiddingAllowed){
                 custFuncs.MsgBox(getString(R.string.FirstHandBidNotAllowedMsg), true);
             }
             else {
@@ -170,11 +170,14 @@ public class ScorePad extends AppCompatActivity {
 
         closeFABMenu();
 
-        if((currentGame.getTeam1Score() == 0 && currentGame.getTeam2Score() == 0) && (!t1BidEntered || !t2BidEntered) &&  blnFirstHandBid){
-            custFuncs.MsgBox(this,"You must place bids for both teams before entering the books.", true);
+        updatePreferences();
+
+        boolean areBidsRequired = !blnFirstHandBiddingAllowed && currentHand.getHandNum() == 1;
+
+        if(areBidsRequired && (!t1BidEntered || !t2BidEntered)){
+            custFuncs.MsgBox(getString(R.string.enterBidsBeforeBooksMsg), true);
         }
         else{
-            updatePreferences();
 
             try {
                 Intent i = getAndPopulateIntentWithGameData(this, EnterBooks.class);
@@ -423,7 +426,7 @@ public class ScorePad extends AppCompatActivity {
             PLAY_TO_SCORE = Integer.parseInt(custFuncs.getPreference(this.getApplicationContext(), this.getResources().getString(R.string.pref_key_winning_score),this.getResources().getString(R.string.pref_default_winning_score)));
             BLIND_BID_STYLE=Integer.parseInt(custFuncs.getPreference(this.getApplicationContext(), getString(R.string.pref_key_blindBidStyle),getString(R.string.pref_default_blindBidStyle)));
             BLIND_BID_POINT_BONUS = Integer.parseInt(custFuncs.getPreference(this.getApplicationContext(),getString(R.string.pref_key_blindBidPointBonus),getString(R.string.pref_default_blindBidPointBonus)));
-            blnFirstHandBid = custFuncs.getPreference(this.getApplicationContext(),getString(R.string.pref_key_firstHandBid),res.getBoolean(R.bool.pref_default_firstHandBid));
+            blnFirstHandBiddingAllowed = custFuncs.getPreference(this.getApplicationContext(),getString(R.string.pref_key_firstHandBid),res.getBoolean(R.bool.pref_default_firstHandBid));
             INT_SANDBAG_LIMIT = Integer.parseInt(custFuncs.getPreference(this.getApplicationContext(),getString(R.string.pref_key_sandbagLimit),getString(R.string.pref_default_sandbagLimit)));
             INT_SANDBAG_PENALTY = Integer.parseInt(custFuncs.getPreference(this.getApplicationContext(),getString(R.string.pref_key_sandbagPenalty),getString(R.string.pref_default_sandbagPenalty)));
             blnNoOversMode = custFuncs.getPreference(this, getString(R.string.pref_key_noOverOption), getResources().getBoolean(R.bool.pref_default_noOverOption));
@@ -557,49 +560,6 @@ public class ScorePad extends AppCompatActivity {
         catch(Exception e){}
 
     }
-
-    Thread bidAudioThread = new Thread(new Runnable(){
-        public void run(){
-
-            String t1String = "", t2String = "";
-
-            try{
-
-
-            }
-            catch(Exception e){}
-
-		/*Check for board bids
-		if(t1String.equals("4") || t2String.equals("4")){
-			sound = MediaPlayer.create(getApplicationContext(), R.raw.bidlowcensored);
-			sound.start();
-		}
-		*/
-
-            try{
-
-                currentHand.setT1Bid(Integer.parseInt(t1String));
-                currentHand.setT2Bid(Integer.parseInt(t2String));
-
-            }
-            catch (Exception e){
-                return;
-            }
-
-            //Wait until sound is done playing to play the next sound
-            while(sound.isPlaying()){
-                //Just chill for a sec
-            }
-
-            //Check for under bidding
-            if(currentHand.getT1Bid() + currentHand.getT2Bid() < 13){
-                //sound = MediaPlayer.create(getApplicationContext(), R.raw.underbid);
-                //sound.start();
-            }
-
-        }
-
-    });
 
     private void closeFABMenu(){
 
@@ -798,7 +758,7 @@ public class ScorePad extends AppCompatActivity {
 
         boolean firstHand;
 
-        firstHand = currentGame.getTeam1Score() == 0 && currentGame.getTeam2Score() == 0 && !blnFirstHandBid;
+        firstHand = currentGame.getTeam1Score() == 0 && currentGame.getTeam2Score() == 0 && !blnFirstHandBiddingAllowed;
 
         if (!firstHand && !blnNoOversMode){
             if (sandbags > INT_SANDBAG_LIMIT)
