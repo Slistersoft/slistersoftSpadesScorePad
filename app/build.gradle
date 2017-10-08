@@ -6,10 +6,10 @@ android {
 
     defaultConfig {
         applicationId "com.slistersoft.slistersoftspadesscorepad"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 25
-        versionCode 29
-        versionName "3.3.2"
+        versionCode 30
+        versionName "3.3.2.1"
     }
 
     buildTypes {

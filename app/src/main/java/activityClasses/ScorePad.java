@@ -172,7 +172,7 @@ public class ScorePad extends AppCompatActivity {
 
         updatePreferences();
 
-        boolean areBidsRequired = !blnFirstHandBiddingAllowed && currentHand.getHandNum() == 1;
+        boolean areBidsRequired =  !(currentHand.getHandNum() == 1 && !blnFirstHandBiddingAllowed);
 
         if(areBidsRequired && (!t1BidEntered || !t2BidEntered)){
             custFuncs.MsgBox(getString(R.string.enterBidsBeforeBooksMsg), true);
