@@ -18,5 +18,9 @@
     <string name="getHandFromDBFailMsg">Error loading hand</string>
     <string name="insertNewHandToDBSuccessMsg">New hand saved</string>
     <string name="enterBidsBeforeBooksMsg">You must place bids for both teams before entering the books.</string>
+    <string name="gameOverTitleMsg">Game Over</string>
+    <string name="gameFinishedPositiveBtnTxt">Yeah, it\'s time to brag</string>
+    <string name="gameFinishedNegativeBtnTxt">Nah, I\'m way too humble for that.</string>
+    <string name="tallyScoresDialogTitle">Hand Score Summary</string>
 
 </resources>

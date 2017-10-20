@@ -102,8 +102,6 @@ public class MainActivity extends AppCompatActivity {
             //Initialize Database
             dbHandler = new GameSaveDatabase(this);
 
-            checkForSavedGames();
-
 
         }
         catch(Exception e){

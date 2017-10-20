@@ -832,11 +832,34 @@ public class ScorePad extends AppCompatActivity {
 
                             getEarnedPointsHumanSummaryString(currentGame.getTeam2Name(),currentHand.getT2Bid(),currentHand.getT2BooksEarned(), t2Sandbags, t2EarnedPoints);
 
-            custFuncs.MsgBox(this, scoreSum, false);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.tallyScoresDialogTitle);
+            builder.setMessage(scoreSum);
+            builder.setCancelable(false);
 
-            updateScores(t1EarnedPoints + currentGame.getTeam1Score() , t2EarnedPoints + currentGame.getTeam2Score());
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-            currentHand.insertNewHandToDB();
+                    updateScores(t1EarnedPoints + currentGame.getTeam1Score() , t2EarnedPoints + currentGame.getTeam2Score());
+
+                    if(!isGameFinished(currentGame.getTeam1Score(), currentGame.getTeam2Score())) {
+                        currentHand.insertNewHandToDB();
+                    }
+                }
+            });
+
+            builder.setNegativeButton("Undo This Hand", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+
+           dialog.show();
+
 
         } catch (Exception e) {
         }
@@ -972,6 +995,17 @@ public class ScorePad extends AppCompatActivity {
             //Update points to win labels
             updateScoreToWinLabels(t1NewScore, t2NewScore);
 
+            if(isGameFinished(currentGame.getTeam1Score(), currentGame.getTeam2Score())){
+
+                currentGame.setGameComplete(true);
+                launchGameFinishedDialog(currentGame.getTeam1Score(), currentGame.getTeam2Score());
+
+            }
+            else{
+                currentGame.setGameComplete(false);
+            }
+
+
             if(!gameStartup) {
                 currentGame.saveChangesToDB();
             }
@@ -990,6 +1024,48 @@ public class ScorePad extends AppCompatActivity {
 
     }
 
+    private void launchGameFinishedDialog(int team1Score, int team2Score) {
+
+        String winningTeamName;
+        String dialogMsg;
+
+        //Build message strings based on game outcome
+        if(team1Score > team2Score){
+            winningTeamName = currentGame.getTeam1Name();
+        }
+        else{
+            winningTeamName = currentGame.getTeam2Name();
+        }
+
+        dialogMsg = "Team " + winningTeamName + " wins!"
+                + "\n\nFINAL SCORE: "
+                + "\n" + currentGame.getTeam1Name() + ": " + currentGame.getTeam1Score()
+                + "\n" + currentGame.getTeam2Name() + ": " + currentGame.getTeam2Score()
+                + "\n\nWould you like to share your victory to another app?";
+
+        AlertDialog.Builder d = new AlertDialog.Builder(this);
+        d.setTitle(R.string.gameOverTitleMsg);
+        d.setMessage(dialogMsg);
+
+        d.setPositiveButton(getString(R.string.gameFinishedPositiveBtnTxt), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                shareScore();
+            }
+        });
+
+        d.setNegativeButton(getString(R.string.gameFinishedNegativeBtnTxt), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog popup = d.create();
+        popup.show();
+
+    }
+
     /**
      * Updates scores, refreshes displays, and saves to database.
      * @param t1NewScore
@@ -998,6 +1074,20 @@ public class ScorePad extends AppCompatActivity {
     private void updateScores(int t1NewScore, int t2NewScore){
 
         updateScores(t1NewScore, t2NewScore, false);
+
+    }
+
+    /**
+     * Determines if the game is over
+     * @param t1Score
+     * @param t2Score
+     * @return true if the winning score has been reached by either team. False if the game is still going.
+     */
+    private boolean isGameFinished(int t1Score, int t2Score){
+
+        updatePreferences();
+
+        return t1Score >= PLAY_TO_SCORE || t2Score >= PLAY_TO_SCORE;
 
     }
 
