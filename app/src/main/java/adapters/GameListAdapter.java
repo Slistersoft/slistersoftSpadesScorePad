@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import customClasses.CUSTOM_FUNCTIONS;
@@ -23,6 +25,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
     private List<Game> mGames;
     private Context callingContext;
     private CUSTOM_FUNCTIONS custFuncs;
+    private int lastPositionAnimated = -1;
 
     public class GameViewHolder extends RecyclerView.ViewHolder{
 
@@ -99,8 +102,26 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
             viewHolder.tvT2Score.setText(Integer.toString(game.getTeam2Score()));
             viewHolder.tvDateStarted.setText(game.getHumanDateStartedString());
 
+            // Here you apply the animation when the view is bound
+            setAnimation(viewHolder.itemView, position);
+
         } catch (Exception e) {
             custFuncs.MsgBox(e.getMessage());
+        }
+
+    }
+
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPositionAnimated)
+        {
+            Animation animation = AnimationUtils.loadAnimation(callingContext, R.anim.slide_up_card);
+            if(position > 0) {
+                animation.setStartOffset(callingContext.getResources().getInteger(R.integer.cardSlideInDelay));
+            }
+            viewToAnimate.startAnimation(animation);
+            lastPositionAnimated = position;
         }
 
     }
