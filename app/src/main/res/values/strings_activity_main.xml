@@ -23,5 +23,6 @@
     <string name="hateAppMsg">Well if you hate it so much. You should still give me some feedback to help me improve the app. At the very least this will take you to the place to uninstall the app.</string>
     <string name="sendEmailIntentType">message/rfc822</string>
     <string name="launchGamePickerError">Error launching game picker</string>
+    <string name="load_game_picker_btn_txt">Resume Previous Game</string>
 
 </resources>

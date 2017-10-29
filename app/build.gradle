@@ -8,8 +8,8 @@ android {
         applicationId "com.slistersoft.slistersoftspadesscorepad"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 32
-        versionName "32"
+        versionCode 33
+        versionName "3.0.33"
     }
 
     buildTypes {
