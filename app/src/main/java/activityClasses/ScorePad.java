@@ -561,40 +561,53 @@ public class ScorePad extends AppCompatActivity {
 
     }
 
+    public void closeFABMenu(View v){
+
+        if(isFABMenuOpen()) {
+
+            try {
+                fabTableLayout.setVisibility(View.GONE);
+                fabTableLayout.startAnimation(animHideFABMenu);
+
+                fabMain.startAnimation(animHideFAB);
+            } catch (Exception e) {
+                custFuncs.MsgBox(this, e.getMessage(), true);
+            }
+        }
+    }
+
     private void closeFABMenu(){
 
-        try{
-            fabTableLayout.setVisibility(View.GONE);
-            fabTableLayout.startAnimation(animHideFABMenu);
-
-            fabMain.startAnimation(animHideFAB);
-        }
-        catch (Exception e){
-            custFuncs.MsgBox(this, e.getMessage(),true);
-        }
-
+        closeFABMenu(null);
 
     }
 
     private void openFABMenu(){
 
-        try
-        {
-            fabTableLayout.setVisibility(View.VISIBLE);
-            fabTableLayout.startAnimation(animShowFABMenu);
+        if(!isFABMenuOpen()) {
 
-            fabMain.startAnimation(animShowFAB);
+            try {
+                fabTableLayout.setVisibility(View.VISIBLE);
+                fabTableLayout.startAnimation(animShowFABMenu);
+
+                fabMain.startAnimation(animShowFAB);
+            } catch (Exception e) {
+                custFuncs.MsgBox(this, e.getMessage(), true);
+            }
         }
-        catch (Exception e){
-            custFuncs.MsgBox(this, e.getMessage(),true);
-        }
+    }
+
+    private boolean isFABMenuOpen(){
+
+        return fabTableLayout.getVisibility() == View.VISIBLE;
+
     }
 
     public void toggleFABMenu(View v){
 
         try{
 
-            if(fabTableLayout.getVisibility() == View.VISIBLE){
+            if(isFABMenuOpen()){
 
                 closeFABMenu();
 
