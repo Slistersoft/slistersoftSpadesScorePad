@@ -1,27 +1,41 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        playStoreRelease {
+            keyAlias 'spadesScorePad'
+            keyPassword '~R]5uGHj2Kc7#Hiq!GH!MK/SH,w'
+            storeFile file('D:/Google Drive/Software Source Code/Android Projects/Keystores (DON\'T DELETE OR ELSE YOU WONT BE ABLE TO UPDATE IN PLAY STORE)/GooglePlayAppSigningKeystore_Slistersoft.jks')
+            storePassword 'yX!jEaCHM+{EW2]kR#Hh-?^L6?gf'
+        }
+    }
     compileSdkVersion 27
     buildToolsVersion '26.0.2'
-
     defaultConfig {
         applicationId "com.slistersoft.slistersoftspadesscorepad"
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 34
         versionName "3.0.34"
+        signingConfig signingConfigs.playStoreRelease
     }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.playStoreRelease
         }
+        debug {
+            signingConfig signingConfigs.playStoreRelease
+            debuggable false
+        }
+    }
+    productFlavors {
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:27.0.0'
     compile 'com.android.support:design:27.0.0'
     compile 'com.android.support:cardview-v7:27.0.0'
