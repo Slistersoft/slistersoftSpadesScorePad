@@ -15,8 +15,8 @@ android {
         applicationId "com.slistersoft.slistersoftspadesscorepad"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 34
-        versionName "3.0.34"
+        versionCode 35
+        versionName "3.0"
         signingConfig signingConfigs.playStoreRelease
     }
     buildTypes {
