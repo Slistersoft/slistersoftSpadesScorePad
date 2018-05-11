@@ -5,7 +5,7 @@ android {
         playStoreRelease {
             keyAlias 'spadesScorePad'
             keyPassword '~R]5uGHj2Kc7#Hiq!GH!MK/SH,w'
-            storeFile file('D:/Google Drive/Software Source Code/Android Projects/Keystores (DON\'T DELETE OR ELSE YOU WONT BE ABLE TO UPDATE IN PLAY STORE)/GooglePlayAppSigningKeystore_Slistersoft.jks')
+            storeFile file('F:/Dropbox/Software Source Code/Android Projects/Keystores (DON\'T DELETE OR ELSE YOU WONT BE ABLE TO UPDATE IN PLAY STORE)/GooglePlayAppSigningKeystore_Slistersoft.jks')
             storePassword 'yX!jEaCHM+{EW2]kR#Hh-?^L6?gf'
         }
     }
